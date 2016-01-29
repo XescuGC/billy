@@ -45,7 +45,13 @@ function appJs() {
 
 gulp.task('default', ['build']);
 
-gulp.task('start', ['build', 'server']);
+gulp.task('start', ['build', 'watch', 'server']);
+
+gulp.task('watch', [ 'watch:js' ]);
+
+gulp.task('watch:js', function() {
+  return gulp.watch(conf.src + '/client/**/*', ['inject:app:js']);
+})
 
 function vendorJs() {
   return gulp.src(mainBowerFiles({filter: '**/*.js'}))

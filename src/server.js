@@ -2,6 +2,7 @@ import express     from 'express'
 import morgan      from 'morgan';
 import exphbs      from 'express-handlebars';
 import compression from 'compression';
+import * as controllers from './controllers';
 
 const app = express();
 
@@ -20,13 +21,15 @@ app.set('views', __dirname + '/views');
 
 app.use(compression());
 
-console.log(`${__dirname}/../`)
-
 app.use(express.static(`${__dirname}/..`));
 
 app.get('/', (req, res, next) => {
   res.render('home/index')
 });
+
+app.use('/invoices', controllers.Invoice);
+app.use('/clients', controllers.Client);
+app.use('/invoice_lines', controllers.InvoiceLine);
 
 // Handle errors
 app.use( (err, req, res, next) => {
