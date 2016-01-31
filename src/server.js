@@ -23,16 +23,14 @@ app.use(compression());
 
 app.use(express.static(`${__dirname}/..`));
 
-app.get('/', (req, res, next) => {
-  res.render('home/index')
-});
+app.get('/', (req, res, next) => res.render('home/index'));
 
 app.use('/invoices', controllers.Invoice);
 app.use('/clients', controllers.Client);
 app.use('/invoice_lines', controllers.InvoiceLine);
 
 // Handle errors
-app.use( (err, req, res, next) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 })
@@ -41,5 +39,5 @@ const server = app.listen((process.env.PORT || 5000), () => {
   const host = server.address().address;
   const port = server.address().port;
 
-  console.log(`Example app listening at http://${host}:${port}`);
+  console.log(`Billy is ready to invoice at http://${host}:${port}`);
 })
