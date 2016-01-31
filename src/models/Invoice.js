@@ -10,7 +10,18 @@ Invoice.has({
   id:        { is: 'rw', isa: 'number' },
   client_id: { is: 'rw', isa: 'number' },
   _client:   { is: 'rw' },
+  client_name: { is: 'rw' }
+  client_vat_number
+  client_address
+  client_province
+  client_locality
+  client_zipcode
+  client_country
   emitted:   { is: 'rw', default() { return new Date() } }
+  pit:       { is: 'rw' },
+  vat:       { is: 'rw' },
+  status:    { is: 'rw', default() { return 'draft' } },
+
 });
 
 Invoice.prototype.toJSON = function() {
