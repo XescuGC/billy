@@ -10,13 +10,11 @@ import runSequence    from 'run-sequence'
 import debug          from 'gulp-debug'
 import browserify     from 'browserify'
 import babelify       from 'babelify'
-//import reactify       from 'reactify'
 import source         from 'vinyl-source-stream'
 import buffer         from 'vinyl-buffer'
 
 let conf = {
   home:    './',
-  layouts: './src/views/layouts',
   src:     './src',
   assets:  './assets',
   dist:    './dist',
@@ -73,9 +71,9 @@ gulp.task('clean:vendor:css', function() {
 })
 
 gulp.task('inject:vendor:css', ['clean:vendor:css'], function() {
-  return gulp.src(`${conf.layouts}/default.hbs`)
+  return gulp.src(`${conf.src}/index.html`)
     .pipe(inject(vendorCss(), { name: 'vendor' }))
-    .pipe(gulp.dest(conf.layouts));
+    .pipe(gulp.dest(conf.src));
 });
 
 gulp.task('clean:vendor:js', function() {
@@ -83,9 +81,9 @@ gulp.task('clean:vendor:js', function() {
 })
 
 gulp.task('inject:vendor:js', ['clean:vendor:js'], function() {
-  return gulp.src(`${conf.layouts}/default.hbs`)
+  return gulp.src(`${conf.src}/index.html`)
     .pipe(inject(vendorJs(), { name: 'vendor' }))
-    .pipe(gulp.dest(conf.layouts));
+    .pipe(gulp.dest(conf.src));
 });
 
 gulp.task('clean:app:js', function() {
@@ -93,9 +91,9 @@ gulp.task('clean:app:js', function() {
 });
 
 gulp.task('inject:app:js', ['clean:app:js'], function() {
-  return gulp.src(`${conf.layouts}/default.hbs`)
+  return gulp.src(`${conf.src}/index.html`)
     .pipe(inject(appJs(), { name: 'app' }))
-    .pipe(gulp.dest(conf.layouts));
+    .pipe(gulp.dest(conf.src));
 });
 
 gulp.task('build', () => {

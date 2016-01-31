@@ -1,18 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk            from 'redux-thunk';
-import logger           from 'redux-logger';
-import rootReducer      from '../reducers';
-import { enableBatching } from 'redux-batched-actions';
-import { browserHistory } from 'react-router'
-import { syncHistory, routeReducer } from 'react-router-redux'
-import createBrowserHistory       from 'history/lib/createBrowserHistory'
-
-const history = createBrowserHistory();
-
-const reduxRouterMiddleware = syncHistory(history)
+import thunk                         from 'redux-thunk';
+import logger                        from 'redux-logger';
+import rootReducer                   from '../reducers';
+import { enableBatching }            from 'redux-batched-actions';
 
 const createStoreWithMiddlewares = applyMiddleware(
-  reduxRouterMiddleware, thunk, logger()
+  thunk, logger({logger: console})
 )(createStore);
 
 export default function configureStore (initialState) {

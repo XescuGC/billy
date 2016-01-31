@@ -22,7 +22,6 @@
     "browserify": "^13.0.0",
     "compression": "^1.6.1",
     "express": "^4.13.4",
-    "express-handlebars": "^3.0.0",
     "history": "^1.17.0",
     "jsmoo": "^0.1.0",
     "morgan": "^1.6.1",
@@ -31,10 +30,10 @@
     "react-dom": "^0.14.7",
     "react-redux": "^4.1.1",
     "react-router": "^1.0.3",
-    "react-router-redux": "^2.1.0",
     "redux": "^3.1.2",
     "redux-batched-actions": "^0.1.1",
     "redux-logger": "^2.4.0",
+    "redux-simple-router": "^1.0.2",
     "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
@@ -52,7 +51,6 @@
     "gulp-rev": "^6.0.1",
     "gulp-sass": "^2.1.1",
     "main-bower-files": "^2.11.1",
-    "reactify": "^1.1.1",
     "run-sequence": "^1.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
