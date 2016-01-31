@@ -16,9 +16,9 @@ app.use(compression());
 
 app.use(express.static(`${__dirname}/..`));
 
-app.use('/invoices', Controllers.Invoice);
-app.use('/clients', Controllers.Client);
-app.use('/invoice_lines', Controllers.InvoiceLine);
+app.use('/invoices', Controllers.Invoices);
+app.use('/clients', Controllers.Clients);
+app.use('/invoice_lines', Controllers.InvoiceLines);
 app.use(Utils.renderReact())
 
 // Handle errors

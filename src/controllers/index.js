@@ -1,7 +1,7 @@
-import Client from './Client';
-import Invoice from './Invoice';
-import InvoiceLine from './InvoiceLine';
+import Clients from './Clients';
+import Invoices from './Invoices';
+import InvoiceLines from './InvoiceLines';
 
-export { Client };
-export { Invoice };
-export { InvoiceLine };
+export { Clients };
+export { Invoices };
+export { InvoiceLines };

@@ -1,13 +1,13 @@
 import Jsmoo from 'jsmoo';
 
 import db from '../schema';
-import Client from 'Client';
-import Item   from 'Item';
+import Client from './Client';
+import Item   from './Item';
 
 class Invoice extends Jsmoo {}
 
 Invoice.has({
-  id:        { is: 'rw', isa: 'number' }
+  id:        { is: 'rw', isa: 'number' },
   client_id: { is: 'rw', isa: 'string' },
   _client:   { is: 'rw' },
   emitted:   { is: 'rw', default() { return new Date() } }
@@ -65,16 +65,17 @@ Invoice.prototype.delete = () => {
   });
 }
 
-Invoice.find = ({ where, limit, page = 1 }) => {
-    let query = 'SELECT * FROM invoice';
-    if ( where ) query += ` WHERE ${where}`;
-    if ( limit ) query += ` LIMIT ${page * limit}, ${limit}`;
-    return new Promise( (resolve, reject) => {
-      db.all( query, function(err, rows) {
-        if (err) return reject(err);
-        resolve( rows.map(row => Invoice._inflate(row)) );
-      })
+Invoice.find = (q={}) => {
+  let {where, limit, page} = Object.assign({}, { page: 1 }, q);
+  let query = 'SELECT * FROM invoice';
+  if ( where ) query += ` WHERE ${where}`;
+  if ( limit ) query += ` LIMIT ${page * limit}, ${limit}`;
+  return new Promise( (resolve, reject) => {
+    db.all( query, function(err, rows) {
+      if (err) return reject(err);
+      resolve( rows.map(row => Invoice._inflate(row)) );
     })
+  })
 }
 
 const getStatement = db.prepare('SELECT * FROM invoice WHERE id=$id');
