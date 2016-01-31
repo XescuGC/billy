@@ -1,19 +1,20 @@
 import fs from 'fs';
 import sqlite from 'sqlite3';
 
-let dbpath = "../../test.db";
+let dbpath = "test.db";
 
-const mustDeploy = !fs.existsSync(dbpath);
-let   db         = new sqlite.Database(dbpath);
-
-// Deploy initial schema when the db file is brand new.
-if ( mustDeploy ) {
+let   db
+try { fs.accessSync('test.db', fs.F_OK) }
+catch(e) {
+  db = new sqlite.Database(dbpath);
+  //TODO: check for schema version when we implement versioning and migrations :-)
+  // Deploy initial schema when the db file is brand new.
   console.log('Looks like this is the first time: initializing schema.');
-  db.run( fs.readFileSync('init.sql', 'utf8'), (err) => {
+  db.exec( fs.readFileSync(`${__dirname}/init.sql`, 'utf8'), (err) => {
     if (err) throw(`Unable to initialize schema: ${err}`);
   });
 }
 
-//TODO: check for schema version when we implement versioning and migrations :-)
+if (!db) db = new sqlite.Database(dbpath);
 
 export default db;
