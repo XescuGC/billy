@@ -1,33 +1,25 @@
 import express     from 'express'
 import morgan      from 'morgan';
-import exphbs      from 'express-handlebars';
+import bodyParser  from 'body-parser';
 import compression from 'compression';
-import * as controllers from './controllers';
+import * as Controllers from './controllers';
+import * as Utils from './utils';
 
 const app = express();
 
 app.use(morgan('dev'));
 
-app.engine('.hbs', exphbs({
-  defaultLayout:  'default',
-  extname:        '.hbs',
-  layoutsDir:     __dirname + '/views/layouts/',
-  partialsDir:    __dirname + '/views/partials/',
-}));
-
-app.set('view engine', '.hbs');
-
-app.set('views', __dirname + '/views');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compression());
 
 app.use(express.static(`${__dirname}/..`));
 
-app.get('/', (req, res, next) => res.render('home/index'));
-
-app.use('/invoices', controllers.Invoice);
-app.use('/clients', controllers.Client);
-app.use('/invoice_lines', controllers.InvoiceLine);
+app.use('/invoices', Controllers.Invoice);
+app.use('/clients', Controllers.Client);
+app.use('/invoice_lines', Controllers.InvoiceLine);
+app.use(Utils.renderReact())
 
 // Handle errors
 app.use((err, req, res, next) => {
