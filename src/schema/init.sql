@@ -37,6 +37,12 @@ CREATE TABLE config(
   value TEXT
 );
 
+-- INSERTING CONFIG
 INSERT INTO config (key, value) values ('vat',      '21');
 INSERT INTO config (key, value) values ('currency', 'Euro');
+
+-- INSERTING CLIENT
+INSERT INTO client (name, vat_number, address, province, locality, zipcode, country) values ('Pepito', 'C123456787', 'C/ Pepito', 'Barcelona', 'Barcelona', '08032', 'Spain');
+-- INSERTING INVOICE
+INSERT INTO invoice (client_id, emitted) values (1, '1454274155840');
 --INSERT INTO config (key, value) values ('pit', '18'); --irpf

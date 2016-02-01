@@ -1,42 +1,27 @@
 import Jsmoo from 'jsmoo';
 
-import db from '../schema';
-import Client from './Client';
-import Item   from './Item';
+import db         from '../schema';
+import Client     from './Client';
+import Item       from './Item';
+import WithSchema from './roles/WithSchema';
 
 class Invoice extends Jsmoo {}
+
+Invoice.with(WithSchema);
 
 Invoice.has({
   id:        { is: 'rw', isa: 'number' },
   client_id: { is: 'rw', isa: 'number' },
-  _client:   { is: 'rw' },
-  client_name: { is: 'rw' }
-  client_vat_number
-  client_address
-  client_province
-  client_locality
-  client_zipcode
-  client_country
-  emitted:   { is: 'rw', default() { return new Date() } }
+  client:    { is: 'rw', isa: 'Object' },
+  emitted:   { is: 'rw', default() { return new Date() } },
   pit:       { is: 'rw' },
   vat:       { is: 'rw' },
   status:    { is: 'rw', default() { return 'draft' } },
-
 });
 
 Invoice.prototype.toJSON = function() {
   return { client_id: this.client_id, emitted: this.emitted }
 };
-
-Invoice.prototype.client = function() {
-  if ( !this.client_id ) return;
-
-  if ( !this._client ) {
-    this._client = Client.findOne(this.client_id);
-  }
-
-  return this._client;
-}
 
 Invoice.prototype.items = function() {
   //TODO
@@ -80,19 +65,6 @@ Invoice.prototype.delete = function() {
   });
 }
 
-Invoice.find = function(q={}) {
-  let {where, limit, page} = Object.assign({}, { page: 1 }, q);
-  let query = 'SELECT * FROM invoice';
-  if ( where ) query += ` WHERE ${where}`;
-  if ( limit ) query += ` LIMIT ${page * limit}, ${limit}`;
-  return new Promise( (resolve, reject) => {
-    db.all( query, function(err, rows) {
-      if (err) return reject(err);
-      resolve( rows.map(row => Invoice._inflate(row)) );
-    })
-  })
-}
-
 const getStatement = db.prepare('SELECT * FROM invoice WHERE id=$id');
 Invoice.findOne = function(id) {
   getStatement.get( { $id: id }, function(err, row) {
@@ -102,17 +74,22 @@ Invoice.findOne = function(id) {
 }
 
 Invoice._inflate = function(row) {
-  //row.emitted = new Date(row.emmited * 1000);
-  //row.emitted = new Date(row.emmited);
-  let invoice = new Invoice(row);
-  return invoice;
+  // TODO: Build de date
+  row.emitted = new Date(row.emitted);
+  if (row.client) row.client = JSON.parse(row.client);
+  return new Invoice(row);
 }
 
 Invoice.prototype._binded = function() {
   let attrs = {
-    $client_id: this.client_id,
     $emmited:   Math.floor( this.emmited.getTime() / 1000 ), //TODO: formatear para SQL
   };
+  if (attrs.client) {
+    attrs['$client'] = JSON.stringify(this.client);
+    attrs['$client_id'] = this.client_id;
+  } else if (attrs.client_id) {
+    attrs['$client_id'] = this.client_id;
+  }
   if ( this.id ) attrs.$id = this.id;
 
   return attrs;
