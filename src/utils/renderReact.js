@@ -14,11 +14,7 @@ function renderReact() {
       } else if (redirectLocation) {
         res.redirect(302, redirectLocation.pathname + redirectLocation.search)
       } else if (renderProps) {
-        const ingredientLines = [
-          { name: 'Invoice1' },
-          { name: 'Invoice2' },
-        ];
-        const store = configureStore({invoices:  {items: ingredientLines}});
+        const store = configureStore(res.locals.state);
         let reactHTML = ReactDOMServer.renderToString(<Provider store={store}><RoutingContext {...renderProps} /></Provider>);
         res.status(200).send(replaceState( store, reactHTML ));
       } else {

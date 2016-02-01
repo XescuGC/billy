@@ -4,7 +4,7 @@ import db       from '../../schema';
 class WithSchema extends Role {
   static find(q={}) {
     let {where, limit, page} = Object.assign({}, { page: 1 }, q);
-    let query = 'SELECT * FROM invoice';
+    let query = `SELECT * FROM ${this.name}`;
     if ( where ) query += ` WHERE ${where}`;
     if ( limit ) query += ` LIMIT ${page * limit}, ${limit}`;
     let $this = this;

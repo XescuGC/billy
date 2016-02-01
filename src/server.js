@@ -16,6 +16,13 @@ app.use(compression());
 
 app.use(express.static(`${__dirname}/..`));
 
+// Set the initial state
+app.use((req, res, next) => {
+  res.locals.state = {};
+  next();
+});
+
+app.use('/', Controllers.Invoices);
 app.use('/invoices', Controllers.Invoices);
 app.use('/clients', Controllers.Clients);
 app.use('/invoice_lines', Controllers.InvoiceLines);
