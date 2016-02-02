@@ -7,9 +7,17 @@ class Layout extends Component {
     return (
       <div>
         <HeaderSection />
-        <SidebarSection />
-        <div>
-          { this.props.children }
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-md-2'>
+              <SidebarSection />
+            </div>
+            <div className='col-md-10'>
+              <div>
+                { this.props.children }
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
