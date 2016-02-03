@@ -1,4 +1,8 @@
-export default function reducer(state={}, action) {
+let initialStaet = {
+  items: []
+};
+
+export default function reducer(state=initialStaet, action) {
   let { payload } = action;
 
   switch (action.type) {

@@ -1,37 +1,31 @@
 import React, { Component } from 'react';
 import { connect }          from 'react-redux';
+import { pushPath }         from 'redux-simple-router';
+import Table                from './Table';
 
 class InvoicesSection extends Component {
   render() {
-    let invoices = this.props.invoices.items.map(i => this.renderInvoice(i));
+    let { invoices } = this.props;
     return (
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Emitted</th>
-            <th>Client</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          { invoices }
-        </tbody>
-      </table>
+      <Table
+        columns={['id', 'emitted', 'client_id', 'total', 'options']}
+        items={invoices.items}
+        options={ this.renderOption.bind(this) }
+      />
     )
   }
 
-  renderInvoice(invoice) {
-    return (
-      <tr key={ invoice.id }>
-        <th scope="row">{ invoice.id }</th>
-        <td>{ invoice.emitted.toString() }</td>
-        <td>{ invoice.client_id }</td>
-        <td>{ 0 }</td>
-        <td><button type="button" className="btn btn-primary">View</button></td>
-      </tr>
+  renderOption(item) {
+    return(
+      <button onClick={this.handleClickView.bind(this, item.id)} type="button" className="btn btn-primary">
+        View
+      </button>
     )
+  }
+
+  handleClickView(invoiceId, e) {
+    e.preventDefault();
+    this.props.dispatch(pushPath(`/invoices/${invoiceId}`));
   }
 }
 

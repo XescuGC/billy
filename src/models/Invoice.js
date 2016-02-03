@@ -20,7 +20,7 @@ Invoice.has({
 });
 
 Invoice.prototype.toJSON = function() {
-  return { client_id: this.client_id, emitted: this.emitted, id: this.id }
+  return { client_id: this.client_id, emitted: this.emitted.toString(), id: this.id }
 };
 
 Invoice.prototype.items = function() {

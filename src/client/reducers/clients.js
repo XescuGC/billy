@@ -1,3 +1,7 @@
+let initialState = {
+  items: []
+}
+
 export default function reducer(state={}, action) {
   let { payload } = action;
 
