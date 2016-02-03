@@ -18,10 +18,10 @@ app.use(express.static(`${__dirname}/..`));
 
 // Set the initial state
 app.use((req, res, next) => {
-  const slug = req.path.split('/')[1];
+  const slug = req.path.split('/')[1] || 'invoices';
   res.locals.state = {
     sidebar: [
-      { slug: 'invoices', name: 'Invoices', active: (slug === 'invoices' || !slug) ? true : false },
+      { slug: 'invoices', name: 'Invoices', active: slug === 'invoices' ? true : false },
       { slug: 'clients',  name: 'Clients',  active: slug === 'clients' ? true : false },
     ]
   };

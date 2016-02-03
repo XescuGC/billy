@@ -1,4 +1,4 @@
-import { UPDATE_PATH }         from 'redux-simple-router'
+import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function reducer(state={}, action) {
   let { payload } = action;
@@ -9,7 +9,7 @@ export default function reducer(state={}, action) {
       return state.map( r => {
         if (r.slug === slug) { r.active = true  }
         else                 { r.active = false }
-        return r
+        return r;
       })
       return state;
       break;

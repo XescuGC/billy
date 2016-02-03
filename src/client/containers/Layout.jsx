@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import HeaderSection        from '../components/HeaderSection';
+import LogoSection          from '../components/LogoSection';
+import SearchSection        from '../components/SearchSection';
 import SidebarSection       from '../components/SidebarSection';
 
 class Layout extends Component {
   render() {
     return (
       <div>
-        <HeaderSection />
         <div className='container-fluid'>
-          <div className='row'>
+          <div className='row header-command'>
+            <div className='col-md-2'>
+              <LogoSection />
+            </div>
+            <div className='col-md-10'>
+              <SearchSection />
+            </div>
+          </div>
+          <div className='row main'>
             <div className='col-md-2'>
               <SidebarSection />
             </div>
             <div className='col-md-10'>
-              <div>
-                { this.props.children }
-              </div>
+              { this.props.children }
             </div>
           </div>
         </div>
