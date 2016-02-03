@@ -47,7 +47,7 @@ Invoice.prototype.insert = function() {
 const updateStatement = db.prepare('UPDATE invoice set client_id=$client_id, emitted=$emmited WHERE id=$id');
 Invoice.prototype.update = function() {
   return new Promise( (resolve, reject) => {
-    db.run( updateStatemen, this._binded(), function(err) {
+    db.run( updateStatement, this._binded(), function(err) {
         if (err) return reject(err);
         resolve();
     });
@@ -67,9 +67,11 @@ Invoice.prototype.delete = function() {
 
 const getStatement = db.prepare('SELECT * FROM invoice WHERE id=$id');
 Invoice.findOne = function(id) {
-  getStatement.get( { $id: id }, function(err, row) {
-    if (err) return reject(err);
-    return Invoice._inflate(row);
+  return new Promise( (resolve, reject) => {
+    getStatement.get( { $id: id }, function(err, row) {
+      if (err) return reject(err);
+      resolve(Invoice._inflate(row));
+    });
   });
 }
 
