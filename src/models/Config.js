@@ -81,4 +81,4 @@ Config._inflate = function(row) {
 
 Config.prototype._binded = function() { return { $key: this.key, $value: this.value } }
 
-export default Item;
+export default Config;
