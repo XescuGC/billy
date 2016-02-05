@@ -23,6 +23,7 @@ app.use((req, res, next) => {
     sidebar: [
       { slug: 'invoices', name: 'Invoices', active: slug === 'invoices' ? true : false },
       { slug: 'clients',  name: 'Clients',  active: slug === 'clients' ? true : false },
+      { slug: 'config',   name: 'Config',   active: slug === 'config' ? true : false },
     ]
   };
   next();

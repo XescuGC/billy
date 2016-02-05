@@ -1,19 +1,20 @@
 import gulp           from 'gulp'
-import mainBowerFiles from 'main-bower-files'
 import nodemon        from 'gulp-nodemon'
 import clean          from 'gulp-clean'
 import inject         from 'gulp-inject'
 import concat         from 'gulp-concat'
 import rev            from 'gulp-rev'
 import sass           from 'gulp-sass'
-import runSequence    from 'run-sequence'
+import eslint         from 'gulp-eslint'
 import debug          from 'gulp-debug'
+import runSequence    from 'run-sequence'
 import browserify     from 'browserify'
+import mainBowerFiles from 'main-bower-files'
 import babelify       from 'babelify'
 import source         from 'vinyl-source-stream'
 import buffer         from 'vinyl-buffer'
 
-let conf = {
+const conf = {
   home:    './',
   src:     './src',
   assets:  './assets',
@@ -24,6 +25,7 @@ gulp.task('server', () => {
   nodemon({
     env:    { 'NODE_ENV': 'development' },
     exec:   'babel-node src/server.js',
+    ext:    'html js jsx',
     ignore: [conf.dist]
   })
 })
@@ -31,8 +33,8 @@ gulp.task('server', () => {
 function appJs() {
   return browserify({ entries: conf.src + '/client/app.jsx', extensions: ['.jsx'], debug: true, transform: [ babelify ] })
     .bundle()
-    .on('error', (err)  => {
-      console.error('ERROR: ', err.stack);
+    .on('error', function(err) {
+      console.log(err.stack);
       this.emit('end');
     })
     .pipe(source('app.js'))
@@ -46,6 +48,13 @@ gulp.task('default', ['build']);
 gulp.task('start', ['build', 'watch', 'server']);
 
 gulp.task('watch', [ 'watch:js' ]);
+
+gulp.task('lint', function() {
+  return gulp.src(['gulpfile.js', `${conf.src}/**/**.{js,jsx}`])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+});
 
 gulp.task('watch:js', function() {
   return gulp.watch(conf.src + '/client/**/*', ['inject:app:js']);
