@@ -47,5 +47,5 @@ export default function request ( routeName, query ) {
     throw new Error(`Not a valid method! ${conf.method}`);
   }
 
-  return $.ajax(conf).then( (data, textStatus, jqXHR) =>  data );
+  return $.ajax(conf).then( (data, textStatus, jqXHR) => data );
 }

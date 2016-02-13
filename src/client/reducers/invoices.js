@@ -1,10 +1,10 @@
 import { LOAD_INVOICES } from '../constants/Invoice';
 
-let initialStaet = {
+let initialState = {
   items: []
 };
 
-export default function reducer(state=initialStaet, action) {
+export default function reducer(state=initialState, action) {
   let { payload } = action;
 
   switch (action.type) {

@@ -1,6 +1,8 @@
 import { UPDATE_PATH } from 'redux-simple-router'
 
-export default function reducer(state={}, action) {
+const initialState = { };
+
+export default function reducer(state=initialState, action) {
   let { payload } = action;
 
   switch (action.type) {

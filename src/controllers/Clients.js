@@ -22,7 +22,7 @@ clients.get('/new', (req, res, next) => {
 clients.post('/new', (req, res, next) => {
   // TODO Create a new Client
   console.log(req.body);
-  next();
+  res.status(201).json({});
 });
 
 export default clients;

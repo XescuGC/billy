@@ -55,7 +55,7 @@ class ClientsNewSection extends Component {
 
 function select(state) {
   return {
-    clients: state.clients
+    global: state.global
   }
 }
 

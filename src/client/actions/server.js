@@ -33,8 +33,8 @@ export function createClient(client) {
     dispatch(fetching());
     request('createClient', client).then(json => {
       dispatch(batchActions([
-        fetched(),
-        loadClients(json),
+        fetched()
+        //loadClients(json),
       ]));
     });
   };
