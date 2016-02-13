@@ -1,8 +1,9 @@
 const ORIGIN = 'http://localhost:5000';
 const METHODS = { get:  'GET', post: 'POST' };
 const ROUTES = {
-  'clients'   : { method: METHODS.get, url: `${ORIGIN}/clients`  },
-  'invoices'  : { method: METHODS.get, url: `${ORIGIN}/invoices` },
+  'clients'       : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
+  'invoices'      : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
+  'createClient'  : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
 }
 
 const querySerializer = (obj, prefix) => {
@@ -39,12 +40,10 @@ export default function request ( routeName, query ) {
 
   if (conf.method === METHODS.get ) {
     conf.url = `${route.url}?${querySerializer(query)}`
-  }
-  else if (conf.method === METHODS.post ) {
+  } else if (conf.method === METHODS.post ) {
     conf.url = route.url;
-    conf.body = JSON.stringify(query);
-  }
-  else {
+    conf.data = query;
+  } else {
     throw new Error(`Not a valid method! ${conf.method}`);
   }
 

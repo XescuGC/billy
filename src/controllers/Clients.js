@@ -15,4 +15,14 @@ clients.get('/', (req, res, next) => {
   })
 });
 
+clients.get('/new', (req, res, next) => {
+  next();
+});
+
+clients.post('/new', (req, res, next) => {
+  // TODO Create a new Client
+  console.log(req.body);
+  next();
+});
+
 export default clients;

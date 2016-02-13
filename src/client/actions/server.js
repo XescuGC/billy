@@ -6,7 +6,7 @@ import * as ActionTypes from '../constants/Server';
 
 export function fetchClients() {
   return dispatch => {
-    dispatch(fetching);
+    dispatch(fetching());
     request('clients').then(json => {
       dispatch(batchActions([
         fetched(),
@@ -18,12 +18,24 @@ export function fetchClients() {
 
 export function fetchInvoices() {
   return dispatch => {
-    dispatch(fetching);
+    dispatch(fetching());
     request('invoices').then(json => {
       dispatch(batchActions([
         fetched(),
         loadInvoices(json),
       ]))
+    });
+  };
+}
+
+export function createClient(client) {
+  return dispatch => {
+    dispatch(fetching());
+    request('createClient', client).then(json => {
+      dispatch(batchActions([
+        fetched(),
+        loadClients(json),
+      ]));
     });
   };
 }

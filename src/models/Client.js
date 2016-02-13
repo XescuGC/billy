@@ -6,6 +6,7 @@ class Client extends Jsmoo {}
 Client.with(WithSchema);
 
 Client.has({
+  id:         { is: 'rw', isa: 'number' },
   name:       { is: 'rw', isa: 'string' },
   vat_number: { is: 'rw', isa: 'string' },
   address:    { is: 'rw', isa: 'string' },

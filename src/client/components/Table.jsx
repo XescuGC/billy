@@ -16,7 +16,9 @@ class Table extends Component {
   }
 
   generateHeaders(columns) {
+    const { newBtn } = this.props;
     const headers = columns.map(c => <th key={c} >{c}</th>);
+    if (newBtn) headers.push(<th style={{width: '100px'}} key='create'>{newBtn()}</th>);
     return headers;
   }
 
@@ -33,8 +35,9 @@ class Table extends Component {
 }
 
 Table.propTypes = {
-  items: React.PropTypes.array.isRequired,
-  columns: React.PropTypes.array.isRequired,
+  items:    React.PropTypes.array.isRequired,
+  columns:  React.PropTypes.array.isRequired,
+  create:   React.PropTypes.func,
 }
 
 export default Table;
