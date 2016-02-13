@@ -24,7 +24,12 @@
     "bootstrap-css": {
       "dependencies": {
         "jquery":"~2.2.0"
-      }
+      },
+      "main": [
+        "fonts/*",
+        "css/bootstrap.min.css",
+        "js/bootstrap.min.js"
+      ]
     }
   }
 }

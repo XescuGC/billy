@@ -105,8 +105,13 @@ gulp.task('inject:app:js', ['clean:app:js'], function() {
     .pipe(gulp.dest(conf.src));
 });
 
+gulp.task('copy:fonts', () => {
+  return gulp.src(mainBowerFiles({filter: '**/*.{ttf,woff,woff2}'}), {base: 'bower_components/bootstrap-css'})
+    .pipe(gulp.dest(conf.dist + '/fonts'))
+});
+
 gulp.task('build', () => {
   runSequence(
-    'inject:vendor:css', 'inject:vendor:js', 'inject:app:js'
+    'inject:vendor:css', 'inject:vendor:js', 'inject:app:js', 'copy:fonts'
   );
 });
