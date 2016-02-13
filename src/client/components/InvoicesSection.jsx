@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect }          from 'react-redux';
 import { pushPath }         from 'redux-simple-router';
 import Table                from './Table';
+import * as ServerActions   from '../actions/server';
 
 class InvoicesSection extends Component {
   render() {
@@ -13,6 +14,11 @@ class InvoicesSection extends Component {
         options={ this.renderOption.bind(this) }
       />
     )
+  }
+
+  componentDidMount() {
+    const { invoices, dispatch } = this.props;
+    if (!invoices.items.length) dispatch(ServerActions.fetchInvoices());
   }
 
   renderOption(item) {
