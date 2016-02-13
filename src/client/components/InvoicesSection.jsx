@@ -12,6 +12,7 @@ class InvoicesSection extends Component {
         columns={['id', 'emitted', 'client_id', 'total', 'options']}
         items={invoices.items}
         options={ this.renderOption.bind(this) }
+        newBtn={this.newInvoice.bind(this)}
       />
     )
   }
@@ -27,6 +28,19 @@ class InvoicesSection extends Component {
         View
       </button>
     )
+  }
+
+  newInvoice() {
+    return (
+      <button className='btn btn-success' onClick={this.goToNewInvoice.bind(this)} >
+        New Invoice
+      </button>
+    )
+  }
+
+  goToNewInvoice(e) {
+    e.preventDefault();
+    this.props.dispatch(pushPath('/invoices/new'));
   }
 
   handleClickView(invoiceId, e) {

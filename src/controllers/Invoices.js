@@ -15,4 +15,10 @@ invoices.get('/', (req, res, next) => {
   })
 });
 
+invoices.post('/new', (req, res, next) => {
+  // TODO Create a new Invoice
+  console.log(req.body);
+  res.status(201).json({});
+})
+
 export default invoices;

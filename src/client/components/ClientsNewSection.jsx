@@ -48,7 +48,6 @@ class ClientsNewSection extends Component {
     e.preventDefault();
     let client = {};
     $('#create-client').serializeArray().forEach( i => client[i.name] = i.value );
-    console.log(client);
     this.props.dispatch(ServerActions.createClient(client));
   }
 }

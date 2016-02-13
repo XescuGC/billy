@@ -4,6 +4,7 @@ const ROUTES = {
   'clients'       : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
   'invoices'      : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
   'createClient'  : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
+  'createInvoice' : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
 }
 
 const querySerializer = (obj, prefix) => {

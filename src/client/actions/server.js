@@ -40,6 +40,18 @@ export function createClient(client) {
   };
 }
 
+export function createInvoice(invoice) {
+  return dispatch => {
+    dispatch(fetching());
+    request('createInvoice', invoice).then(json => {
+      dispatch(batchActions([
+        fetched()
+        //loadClients(json),
+      ]));
+    });
+  };
+}
+
 export function fetching() {
   return { type: ActionTypes.FETCHING };
 }
