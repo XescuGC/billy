@@ -16,9 +16,11 @@ clients.get('/', (req, res, next) => {
 });
 
 clients.post('/new', (req, res, next) => {
-  // TODO Create a new Client
+  let client = new Client(req.body);
+  client.save();
   console.log(req.body);
-  res.status(201).json({});
+  console.log(client.toJSON());
+  res.status(201).json(client.toJSON());
 });
 
 export default clients;
