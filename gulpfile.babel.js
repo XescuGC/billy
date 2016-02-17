@@ -107,7 +107,6 @@ gulp.task('inject:app:js', ['clean:app:js'], function() {
 
 gulp.task('copy:fonts', () => {
   return gulp.src(mainBowerFiles({filter: '**/*.{ttf,woff,woff2}'}), {base: 'bower_components/bootstrap-css'})
-    .pipe(debug({title: 'FONTS'}))
     .pipe(gulp.dest(conf.dist))
 });
 
