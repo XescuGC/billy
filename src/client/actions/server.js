@@ -16,6 +16,19 @@ export function fetchClients() {
   };
 }
 
+export function updateUserConfig(user) {
+  return dispatch => {
+    dispatch(fetching());
+    request('updateUserConfig', user).then(json => {
+      dispatch(batchActions([
+        fetched(),
+        //updateConfig(json),
+      ]))
+    });
+  };
+}
+
+
 export function fetchInvoices() {
   return dispatch => {
     dispatch(fetching());

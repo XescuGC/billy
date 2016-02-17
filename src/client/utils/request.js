@@ -1,10 +1,11 @@
 const ORIGIN = 'http://localhost:5000';
 const METHODS = { get:  'GET', post: 'POST' };
 const ROUTES = {
-  'clients'       : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
-  'invoices'      : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
-  'createClient'  : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
-  'createInvoice' : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
+  'clients'           : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
+  'invoices'          : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
+  'createClient'      : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
+  'createInvoice'     : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
+  'updateUserConfig'  : { method: METHODS.post, url: `${ORIGIN}/config/user`  },
 }
 
 const querySerializer = (obj, prefix) => {

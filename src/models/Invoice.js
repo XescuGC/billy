@@ -16,7 +16,7 @@ Invoice.has({
   emitted:   { is: 'rw', default() { return new Date() } },
   pit:       { is: 'rw' },
   vat:       { is: 'rw' },
-  status:    { is: 'rw', default() { return 'draft' } },
+  status:    { is: 'rw', default: 'draft' },
 });
 
 Invoice.prototype.toJSON = function() {

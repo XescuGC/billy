@@ -11,8 +11,13 @@ class InvoicesNewSection extends Component {
         </div>
         <form id='create-invoice'>
           <div className='form-group'>
-            <label htmlFor='name'>Name</label>
-            <input type='text' name='name' className='form-control' id='name' placeholder='Name'/>
+            <label htmlFor='client_name'>Client Name</label>
+            <input type='text' name='client_name' className='form-control' id='client_name' placeholder='Client Name'/>
+          </div>
+
+          <div className='form-group'>
+            <label htmlFor='client_name'>Client Name</label>
+            <input type='text' name='client_name' className='form-control' id='client_name' placeholder='Client Name'/>
           </div>
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
         </form>

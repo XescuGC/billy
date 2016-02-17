@@ -8,7 +8,7 @@ Config.with(WithSchema);
 Config.has({
   key:       { is: 'rw', isa: 'string' },
   value:     { is: 'rw' },
-  is_stored: { is: 'rw', default() { return false } }
+  is_stored: { is: 'rw', default: false },
 });
 
 const getStatement = db.prepare('SELECT * FROM config WHERE key=$key');
@@ -23,22 +23,22 @@ Config.get = function(key) {
 }
 
 Config.set = function(key, value) {
-  Config.get(key).then( cfg => {
+  return Config.get(key).then( cfg => {
     cfg.value = value;
     cfg.save();
   });
 }
 
 Config.prototype.save = function() {
-  if ( this.is_stored ) return this.insert();
+  if ( !this.is_stored ) return this.insert();
   return this.update();
 }
 
-const insertStatement = db.prepare('INSERT INTO config (key, value) values ($key, $value)');
+const insertStatement = db.prepare('INSERT INTO config (key, value, is_stored) values ($key, $value, 1)');
 Config.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( insertStatement, this._binded(), function(err) {
+    insertStatement.run( this._binded(), function(err) {
       if (err) return reject(err);
       resolve();
     });
@@ -48,9 +48,9 @@ Config.prototype.insert = function() {
 const updateStatement = db.prepare('UPDATE config set value=$value WHERE key=$key');
 Config.prototype.update = function() {
   return new Promise( (resolve, reject) => {
-    db.run( updateStatement, this._binded(), function(err) {
-        if (err) return reject(err);
-        resolve();
+    updateStatement.run( this._binded(), function(err) {
+      if (err) return reject(err);
+      resolve();
     });
   });
 }
@@ -67,11 +67,11 @@ Config.prototype.delete = function() {
 }
 
 Config.getAll = function() {
-    return this.find().then( rows => {
-      let config = {};
-      rows.forEach( item => { config[item.key] = item.value });
-      return config;
-    });
+  return this.find().then( rows => {
+    let config = {};
+    rows.forEach( item => { config[item.key] = JSON.parse(item.value) });
+    return config;
+  });
 };
 
 Config._inflate = function(row) {

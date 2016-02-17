@@ -33,8 +33,9 @@ CREATE TABLE invoice(
 );
 
 CREATE TABLE config(
-  key   TEXT PRIMARY KEY,
-  value TEXT
+  key       TEXT PRIMARY KEY,
+  value     TEXT,
+  is_stored INTEGER
 );
 
 -- INSERTING CONFIG

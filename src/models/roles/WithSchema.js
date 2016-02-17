@@ -12,7 +12,6 @@ class WithSchema extends Role {
       db.all( query, function(err, rows) {
         if (err) return reject(err);
         const clients = rows.map(row => $this._inflate(row));
-        console.log(clients.map( c => c._jsmoo_ ));
         resolve( clients );
       })
     })
