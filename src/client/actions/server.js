@@ -2,6 +2,7 @@ import { batchActions } from 'redux-batched-actions';
 import { request } from '../utils';
 import { loadClients } from './client';
 import { loadInvoices } from './invoice';
+import { loadConfig } from './config';
 import * as ActionTypes from '../constants/Server';
 
 export function fetchClients() {
@@ -48,6 +49,18 @@ export function createClient(client) {
       dispatch(batchActions([
         fetched()
         //loadClients(json),
+      ]));
+    });
+  };
+}
+
+export function fetchConfig() {
+  return dispatch => {
+    dispatch(fetching());
+    request('config').then(json => {
+      dispatch(batchActions([
+        fetched(),
+        loadConfig(json),
       ]));
     });
   };

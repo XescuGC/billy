@@ -39,11 +39,12 @@ CREATE TABLE config(
 );
 
 -- INSERTING CONFIG
-INSERT INTO config (key, value) values ('vat',      '21');
-INSERT INTO config (key, value) values ('currency', 'Euro');
+INSERT INTO config (key, value, is_stored) values ('global',      '{"vat":21,"currency":"Euro"}',    1);
+-- INSERT INTO config (key, value, is_stored) values ('vat',      '21',    1);
+-- INSERT INTO config (key, value, is_stored) values ('currency', 'Euro',  1);
 
 -- INSERTING CLIENT
 INSERT INTO client (name, vat_number, address, province, locality, zipcode, country) values ('Pepito', 'C123456787', 'C/ Pepito', 'Barcelona', 'Barcelona', '08032', 'Spain');
 -- INSERTING INVOICE
 INSERT INTO invoice (client_id, emitted) values (1, '1454274155840');
---INSERT INTO config (key, value) values ('pit', '18'); --irpf
+-- INSERT INTO config (key, value) values ('pit', '18'); --irpf

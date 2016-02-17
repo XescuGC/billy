@@ -4,8 +4,7 @@ import Layout                from './containers/Layout';
 import InvoicesSection       from './components/InvoicesSection';
 import ClientsSection        from './components/ClientsSection';
 import ClientsNewSection     from './components/ClientsNewSection';
-import InvoiceViewSection    from './components/InvoiceViewSection';
-import InvoicesNewSection    from './components/InvoicesNewSection';
+import InvoicesViewSection   from './components/InvoicesViewSection';
 import ConfigSection         from './components/ConfigSection';
 
 function getRoutes() {
@@ -13,8 +12,8 @@ function getRoutes() {
     <Route path='/' component={Layout} >
       <IndexRoute component={InvoicesSection} />
       <Route path='/invoices' component={InvoicesSection} />
-      <Route path='/invoices/new' component={InvoicesNewSection} />
-      <Route path='/invoices/:id' component={InvoiceViewSection} />
+      <Route path='/invoices/new' component={InvoicesViewSection} />
+      <Route path='/invoices/:id' component={InvoicesViewSection} />
       <Route path='/clients' component={ClientsSection} />
       <Route path='/clients/new' component={ClientsNewSection} />
       <Route path='/config' component={ConfigSection} />

@@ -2,6 +2,7 @@ const ORIGIN = 'http://localhost:5000';
 const METHODS = { get:  'GET', post: 'POST' };
 const ROUTES = {
   'clients'           : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
+  'config'            : { method: METHODS.get,  url: `${ORIGIN}/config`       },
   'invoices'          : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
   'createClient'      : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
   'createInvoice'     : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
