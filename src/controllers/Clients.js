@@ -10,17 +10,19 @@ clients.get('/', (req, res, next) => {
     res.locals.state.clients = { items };
     next();
   }).catch(err => {
-    console.trace(err);
+    console.trace(err.stack);
     res.status(422).json({ error: err.toString() })
   })
 });
 
 clients.post('/new', (req, res, next) => {
   let client = new Client(req.body);
-  client.save();
-  console.log(req.body);
-  console.log(client.toJSON());
-  res.status(201).json(client.toJSON());
+  client.save().then( dbClient => {
+    res.status(201).json(client.toJSON());
+  }).catch(err => {
+    console.error(err.stack);
+    res.status(422).json({ error: err.toString() })
+  });
 });
 
 export default clients;

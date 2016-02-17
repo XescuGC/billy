@@ -38,7 +38,7 @@ const insertStatement = db.prepare('INSERT INTO config (key, value) values ($key
 Config.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( insertStatemen, this._binded(), function(err) {
+    db.run( insertStatement, this._binded(), function(err) {
       if (err) return reject(err);
       resolve();
     });

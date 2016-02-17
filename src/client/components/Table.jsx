@@ -24,7 +24,6 @@ class Table extends Component {
 
   generateBody(columns, items) {
     return items.map(i => {
-      let optionTmp;
       return (
         <tr key={i.id}>
           { columns.map(c => <td key={c} >{ this.props[c] ? this.props[c](i) : i[c] }</td>) }

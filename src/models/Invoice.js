@@ -36,7 +36,7 @@ const insertStatement = db.prepare('INSERT INTO invoice (client_id, emitted) val
 Invoice.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( insertStatemen, this._binded(), function(err) {
+    db.run( insertStatement, this._binded(), function(err) {
       if (err) return reject(err);
       $this.id = this.lastID;
       resolve();

@@ -11,7 +11,9 @@ class WithSchema extends Role {
     return new Promise( (resolve, reject) => {
       db.all( query, function(err, rows) {
         if (err) return reject(err);
-        resolve( rows.map(row => $this._inflate(row)) );
+        const clients = rows.map(row => $this._inflate(row));
+        console.log(clients.map( c => c._jsmoo_ ));
+        resolve( clients );
       })
     })
   }
