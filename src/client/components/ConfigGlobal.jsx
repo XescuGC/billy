@@ -24,4 +24,8 @@ ConfigGlobal.propTypes = {
   onUpdate:     React.PropTypes.func.isRequired,
 }
 
+ConfigGlobal.defaultProps = {
+  global: {}
+}
+
 export default ConfigGlobal;

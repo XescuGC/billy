@@ -25,7 +25,6 @@ class InvoicesViewBody extends Component{
   }
 
   renderItems(items) {
-    console.log('render Ittems', items);
     return items.map((item, idx)=> {
       return (
         <div className='row' key={idx}>

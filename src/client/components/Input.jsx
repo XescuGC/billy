@@ -10,6 +10,10 @@ class Input extends Component {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ value: newProps.value });
+  }
+
   render() {
     const { value } = this.state;
     const { name } = this.props;
