@@ -29,10 +29,10 @@ class InvoicesViewBody extends Component{
       return (
         <div className='row' key={idx}>
           <div className='col-md-8'>
-            <input type='text' value={item.description} className='form-control' />
+            <input type='text' name={`description[${idx+1}]`} value={item.description} className='form-control' />
           </div>
           <div className='col-md-4'>
-            <input type='text' value={item.price} className='form-control' />
+            <input type='text' name={`price[${idx+1}]`} value={item.price} className='form-control' />
           </div>
         </div>
       );
@@ -43,10 +43,10 @@ class InvoicesViewBody extends Component{
     return (
       <div className='row new-item'>
         <div className='col-md-8'>
-          <input type='text' className='form-control' onKeyPress={this.handleKeyPress.bind(this)} />
+          <input type='text' name='description[0]' className='form-control' onKeyPress={this.handleKeyPress.bind(this)} />
         </div>
         <div className='col-md-4'>
-          <input type='text' className='form-control' onKeyPress={this.handleKeyPress.bind(this)} />
+          <input type='text' name='price[0]' className='form-control' onKeyPress={this.handleKeyPress.bind(this)} />
         </div>
       </div>
     );
