@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect }          from 'react-redux';
 import * as ServerActions   from '../actions/server';
 import ConfigUser           from './ConfigUser';
-import ConfigGlobal         from './ConfigGlobal';
+import FormGroup            from './FormGroup';
 
 class ConfigSection extends Component {
   render() {
-    const { user, global } = this.props.config;
+    const { user, vat, currency } = this.props.config;
     return (
       <div>
         <div className='page-header'>
@@ -16,10 +16,8 @@ class ConfigSection extends Component {
           user={user}
           onUpdate={this.onUpdateUserConfig.bind(this)}
         />
-        <ConfigGlobal
-          global={global}
-          onUpdate={this.onUpdateGlobalConfig.bind(this)}
-        />
+        <FormGroup value={vat} name={'vat'} />
+        <FormGroup value={currency} name={'currency'} />
       </div>
     )
   }
@@ -34,13 +32,6 @@ class ConfigSection extends Component {
     let user = {};
     $('#config-user').serializeArray().forEach( i => user[i.name] = i.value );
     this.props.dispatch(ServerActions.updateUserConfig(user));
-  }
-
-  onUpdateGlobalConfig(e) {
-    e.preventDefault();
-    let global = {};
-    $('#config-global').serializeArray().forEach( i => global[i.name] = i.value );
-    //this.props.dispatch(ServerActions.updateGlobalConfig(global));
   }
 }
 

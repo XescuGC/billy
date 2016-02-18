@@ -69,7 +69,21 @@ Config.prototype.delete = function() {
 Config.getAll = function() {
   return this.find().then( rows => {
     let config = {};
-    rows.forEach( item => { config[item.key] = JSON.parse(item.value) });
+    rows.forEach( item => {
+      if (item.key.match(/:/)) {
+        let schema = config;
+        let pList = item.key.split(':');
+        let len = pList.length;
+        for(let i = 0; i < len-1; i++) {
+          let elem = pList[i];
+          if( !schema[elem] ) schema[elem] = {}
+          schema = schema[elem];
+        }
+        schema[pList[len-1]] = item.value;
+      } else {
+        config[item.key] = item.value;
+      }
+    });
     return config;
   });
 };
