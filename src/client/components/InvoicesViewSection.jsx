@@ -31,7 +31,8 @@ class InvoicesViewSection extends Component {
 
 function select(state) {
   return {
-    invoices: state.invoices
+    invoices: state.invoices,
+    config:   state.config,
   }
 }
 
