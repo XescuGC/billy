@@ -17,10 +17,11 @@ export function fetchClients() {
   };
 }
 
-export function updateUserConfig(user) {
+export function updateConfig(config) {
+  console.log(config);
   return dispatch => {
     dispatch(fetching());
-    request('updateUserConfig', user).then(json => {
+    request('updateConfig', config).then(json => {
       dispatch(batchActions([
         fetched(),
         //updateConfig(json),

@@ -8,15 +8,16 @@ class FormGroup extends Component {
     return (
       <div {...this.props}>
         <label htmlFor={name}>{`${name.split('_').map( n => n[0].toUpperCase() + n.slice(1,n.length)).join(' ')}`}</label>
-        <Input value={value} name={name} />
+        <Input {...this.props.inputEvents} value={value} name={name} />
       </div>
     )
   }
 }
 
 FormGroup.propTypes = {
-  value:  React.PropTypes.node.isRequired,
-  name:   React.PropTypes.string.isRequired,
+  value:        React.PropTypes.node.isRequired,
+  name:         React.PropTypes.string.isRequired,
+  inputEvents:  React.PropTypes.object,
 }
 
 FormGroup.defaultProps = {

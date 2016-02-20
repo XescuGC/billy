@@ -6,7 +6,7 @@ const ROUTES = {
   'invoices'          : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
   'createClient'      : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
   'createInvoice'     : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
-  'updateUserConfig'  : { method: METHODS.post, url: `${ORIGIN}/config/user`  },
+  'updateConfig'      : { method: METHODS.post, url: `${ORIGIN}/config`       },
 }
 
 const querySerializer = (obj, prefix) => {
@@ -49,6 +49,8 @@ export default function request ( routeName, query ) {
   } else {
     throw new Error(`Not a valid method! ${conf.method}`);
   }
+
+  console.log(conf);
 
   return $.ajax(conf).then( (data, textStatus, jqXHR) => data );
 }

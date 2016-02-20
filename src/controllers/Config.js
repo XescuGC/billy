@@ -14,9 +14,8 @@ config.get('/', (req, res, next) => {
   });
 });
 
-config.post('/user', (req, res, next) => {
-  const user = JSON.stringify(req.body);
-  Config.set('user', user).then( () => {
+config.post('/', (req, res, next) => {
+  Promise.all(req.body.configs.map(config => Config.set(config.key, config.value))).then(() => {
     res.status(200).json({});
   }).catch(err => {
     console.trace(err.stack);
