@@ -40,7 +40,7 @@ CREATE TABLE config(
 
 -- INSERTING CONFIG
 INSERT INTO config (key, value, is_stored) values ('vat',       '21',    1);
-INSERT INTO config (key, value, is_stored) values ('currency',  'Euro',  1);
+INSERT INTO config (key, value, is_stored) values ('currency',  '€',     1);
 INSERT INTO config (key, value, is_stored) values ('user:name', 'Cesc',  1);
 
 -- INSERTING CLIENT

@@ -14,7 +14,8 @@ class ConfigSection extends Component {
         </div>
         <ConfigUser
           user={user}
-          onUpdate={this.onUpdateConfig.bind(this)}
+          onUpdateKeys={this.onUpdateKeysConfig.bind(this)}
+          onInputKeyPress={this.onInputKeyPress.bind(this)}
         />
         <FormGroup
           value={vat} name={'vat'}
@@ -33,13 +34,15 @@ class ConfigSection extends Component {
     if (!Object.keys(config).length) dispatch(ServerActions.fetchConfig());
   }
 
-  onInputKeyPress(key, e) { if (e.key === 'Enter') this.onUpdateConfig(e, key) }
+  onInputKeyPress(key, e) { if (e.key === 'Enter') this.onUpdateKeyConfig(e, key) }
 
-  onUpdateConfig(e, key) {
+  onUpdateKeysConfig(configs) {
+    this.props.dispatch(ServerActions.updateConfig({ configs }));
+  }
+
+  onUpdateKeyConfig(e, key) {
     e.preventDefault();
-    console.log(key)
     this.props.dispatch(ServerActions.updateConfig({ configs: [{ key, value: e.target.value }]}));
-    //$('#config-user').serializeArray().forEach( i => user[i.name] = i.value );
   }
 }
 
