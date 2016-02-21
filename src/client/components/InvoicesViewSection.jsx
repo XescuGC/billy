@@ -7,15 +7,15 @@ import InvoicesViewBody         from './InvoicesViewBody';
 
 class InvoicesViewSection extends Component {
   render() {
-    const { invoice } = this.props.invoices
+    const { invoices, config } = this.props;
     return (
       <div>
         <div className='page-header'>
           <h1>New Invoice</h1>
         </div>
         <form id='create-invoice'>
-          <InvoicesViewInformation invoice={invoice} />
-          <InvoicesViewBody invoice={invoice}/>
+          <InvoicesViewInformation invoice={invoices.invoice} config={config} />
+          <InvoicesViewBody invoice={invoices.invoice} config={config} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
         </form>
       </div>
