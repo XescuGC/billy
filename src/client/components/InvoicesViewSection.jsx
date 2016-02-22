@@ -3,7 +3,8 @@ import { connect }              from 'react-redux';
 import * as ServerActions       from '../actions/server';
 import FormGroup                from './FormGroup';
 import InvoicesViewInformation  from './InvoicesViewInformation';
-import InvoicesViewBody         from './InvoicesViewBody';
+import InvoicesViewItems        from './InvoicesViewItems';
+import InvoicesViewTotal        from './InvoicesViewTotal';
 
 class InvoicesViewSection extends Component {
   render() {
@@ -15,7 +16,8 @@ class InvoicesViewSection extends Component {
         </div>
         <form id='create-invoice'>
           <InvoicesViewInformation invoice={invoices.invoice} config={config} />
-          <InvoicesViewBody invoice={invoices.invoice} config={config} />
+          <InvoicesViewItems invoice={invoices.invoice} config={config} />
+          <InvoicesViewTotal invoice={invoices.invoice} config={config} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
         </form>
       </div>

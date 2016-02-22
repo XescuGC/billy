@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormGroup            from './FormGroup';
 
-class InvoicesViewBody extends Component{
+class InvoicesViewItems extends Component{
   constructor(props) {
     super(props);
 
@@ -67,8 +67,9 @@ class InvoicesViewBody extends Component{
 
 }
 
-InvoicesViewBody.propTypes = {
-  invoice: React.PropTypes.object
+InvoicesViewItems.propTypes = {
+  invoice:  React.PropTypes.object,
+  config:   React.PropTypes.object,
 }
 
-export default InvoicesViewBody;
+export default InvoicesViewItems;
