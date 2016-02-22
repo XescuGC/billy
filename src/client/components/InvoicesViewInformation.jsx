@@ -7,24 +7,38 @@ class InvoicesViewInformation extends Component{
     if (!invoice.client) invoice.client = {};
     return (
       <div className='row'>
-        <h3>Client</h3>
 
         <div className='col-md-6'>
-          <FormGroup value={invoice.client.name} name={'client_name'} />
-          <FormGroup value={invoice.client.address} name={'client_address'} />
-          <FormGroup value={invoice.client.province} name={'client_province'} />
-          <FormGroup value={invoice.client.locality} name={'client_locality'} />
-          <FormGroup value={invoice.client.zipcode} name={'client_zipcode'} />
-          <FormGroup value={invoice.client.country} name={'client_country'} />
+          <b>From:</b>
+          <p>{config.user.name}</p>
+          <p>{config.user.vat_number}</p>
+          <p>{config.user.address}</p>
+          <p>{config.user.zipcode} {config.user.locality}</p>
+          <p>{config.user.province} ({config.user.country})</p>
         </div>
         <div className='col-md-6'>
-          <p>Name: {config.user.name}</p>
-          <p>Vat Number: {config.user.vat_number}</p>
-          <p>Address: {config.user.address}</p>
-          <p>Province: {config.user.province}</p>
-          <p>Locality: {config.user.locality}</p>
-          <p>Zipcode: {config.user.zipcode}</p>
-          <p>Country: {config.user.country}</p>
+          <b>To:</b>
+          <FormGroup label={false} value={invoice.client.name} name={'client_name'} />
+          <FormGroup label={false} value={invoice.client.vat_number} name={'client_vat_number'} />
+          <FormGroup label={false} value={invoice.client.address} name={'client_address'} />
+
+          <div className='row'>
+            <div className='col-md-6'>
+              <FormGroup label={false} value={invoice.client.locality} name={'client_locality'} />
+            </div>
+            <div className='col-md-6'>
+              <FormGroup label={false} value={invoice.client.zipcode} name={'client_zipcode'} />
+            </div>
+          </div>
+
+          <div className='row'>
+            <div className='col-md-6'>
+              <FormGroup label={false} value={invoice.client.province} name={'client_province'} />
+            </div>
+            <div className='col-md-6'>
+              <FormGroup label={false} value={invoice.client.country} name={'client_country'} />
+            </div>
+          </div>
         </div>
       </div>
     )

@@ -18,7 +18,7 @@ class Input extends Component {
     const { value } = this.state;
     const { name } = this.props;
     return (
-      <input onChange={this.onValueChange.bind(this)} id={name} { ...this.props } value={value} />
+      <input placeholder={name} onChange={this.onValueChange.bind(this)} id={name} { ...this.props } value={value} />
     )
   }
 
