@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import FormGroup            from './FormGroup';
 
 class InvoicesViewItems extends Component{
-  constructor(props) {
-    super(props);
+  //constructor(props) {
+    //super(props);
 
-    let { invoice } = props;
-    if (!invoice) invoice = {};
-    if (!invoice.items) invoice.items = []
-    this.state = {
-      invoice: invoice
-    }
-  }
+    //let { invoice } = props;
+    //if (!invoice) invoice = {};
+    //if (!invoice.items) invoice.items = []
+    //this.state = {
+      //invoice: invoice
+    //}
+  //}
 
   render() {
-    const { invoice } = this.state;
+    const { invoice } = this.props;
     return (
       <div>
         <h3>Invoice Items</h3>
@@ -55,11 +55,11 @@ class InvoicesViewItems extends Component{
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      let { invoice } = this.state;
+      let { invoice, onAddItem } = this.props;
       const $inputs = $('.new-item input');
       let values = $('.new-item input').map( function() { return this.value });
-      invoice.items.push({description: values[0], price: values[1]})
-      this.setState({invoice: invoice});
+      const item = { description: values[0], price: values[1] };
+      onAddItem(item);
       $inputs.each(function() { this.value = '' });
       $inputs[0].focus();
     }
@@ -68,8 +68,13 @@ class InvoicesViewItems extends Component{
 }
 
 InvoicesViewItems.propTypes = {
-  invoice:  React.PropTypes.object,
-  config:   React.PropTypes.object,
+  invoice:    React.PropTypes.object,
+  config:     React.PropTypes.object,
+  onAddItem:  React.PropTypes.func.isRequired,
+}
+
+InvoicesViewItems.defaultProps = {
+  invoice:  { items: [] }
 }
 
 export default InvoicesViewItems;

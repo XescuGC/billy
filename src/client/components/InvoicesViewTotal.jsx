@@ -12,22 +12,22 @@ class InvoicesViewTotal extends Component {
             <tr>
               <th>Subtotal:</th>
               <td></td>
-              <td>20 {config.currency}</td>
+              <td>{invoice.subtotal || 0} {config.currency}</td>
             </tr>
             <tr>
               <th>PIT:</th>
               <td><Input name={'pit'} value={invoice.pit} /></td>
-              <td>20 {config.currency}</td>
+              <td>{invoice.pitSubtotal} {config.currency}</td>
             </tr>
             <tr>
               <th>VAT:</th>
-              <td><Input name={'vat'} value={invoice.vat || config.vat} /></td>
-              <td>20 {config.currency}</td>
+              <td><Input name={'vat'} value={invoice.vat} /></td>
+              <td>{invoice.vatSubtotal} {config.currency}</td>
             </tr>
             <tr>
               <th>Total:</th>
               <td></td>
-              <td>20 {config.currency}</td>
+              <td>{invoice.total} {config.currency}</td>
             </tr>
           </tbody>
         </table>

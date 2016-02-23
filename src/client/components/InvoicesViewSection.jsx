@@ -1,6 +1,7 @@
 import React, { Component }     from 'react';
 import { connect }              from 'react-redux';
 import * as ServerActions       from '../actions/server';
+import * as InvoiceActions      from '../actions/invoice';
 import FormGroup                from './FormGroup';
 import InvoicesViewInformation  from './InvoicesViewInformation';
 import InvoicesViewItems        from './InvoicesViewItems';
@@ -16,13 +17,23 @@ class InvoicesViewSection extends Component {
         </div>
         <form id='create-invoice'>
           <InvoicesViewInformation invoice={invoices.invoice} config={config} />
-          <InvoicesViewItems invoice={invoices.invoice} config={config} />
+          <InvoicesViewItems invoice={invoices.invoice} config={config} onAddItem={this.onAddItem.bind(this)} />
           <InvoicesViewTotal invoice={invoices.invoice} config={config} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
         </form>
       </div>
     )
   }
+
+  componentDidMount() {
+    const { invoices, config, dispatch } = this.props;
+    if (!invoices.invoice.vat) {
+      dispatch(InvoiceActions.updateInvoiceConfig({ vat: config.vat, pit: config.pit }));
+    }
+  }
+
+  onAddItem(item) { this.props.dispatch(ServerActions.createItem(item)) }
+
   onCreateInvoice(e) {
     e.preventDefault();
     let invoice = {};

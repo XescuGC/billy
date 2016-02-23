@@ -6,7 +6,7 @@ import FormGroup            from './FormGroup';
 
 class ConfigSection extends Component {
   render() {
-    const { user, vat, currency } = this.props.config;
+    const { user, pit, vat, currency } = this.props.config;
     return (
       <div>
         <div className='page-header'>
@@ -20,6 +20,10 @@ class ConfigSection extends Component {
         <FormGroup
           value={vat} name={'vat'}
           inputEvents={ {onKeyPress: this.onInputKeyPress.bind(this, 'vat')} }
+        />
+        <FormGroup
+          value={pit} name={'pit'}
+          inputEvents={ {onKeyPress: this.onInputKeyPress.bind(this, 'pit')} }
         />
         <FormGroup
           value={currency} name={'currency'}

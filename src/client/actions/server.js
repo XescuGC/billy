@@ -1,7 +1,7 @@
 import { batchActions } from 'redux-batched-actions';
 import { request } from '../utils';
 import { loadClients } from './client';
-import { loadInvoices } from './invoice';
+import { loadInvoices, addItem } from './invoice';
 import { loadConfig } from './config';
 import * as ActionTypes from '../constants/Server';
 
@@ -15,6 +15,16 @@ export function fetchClients() {
       ]))
     });
   };
+}
+
+export function createItem(item) {
+  return dispatch => {
+    dispatch(batchActions([
+      fetching(),
+      addItem(item),
+      fetched(),
+    ]));
+  }
 }
 
 export function updateConfig(config) {
