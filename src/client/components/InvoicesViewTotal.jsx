@@ -6,7 +6,7 @@ class InvoicesViewTotal extends Component {
   render() {
     const { config, invoice } = this.props;
     return (
-      <div className='row'>
+      <div className='total-container col-md-5 col-md-offset-7'>
         <table>
           <tbody>
             <tr>
