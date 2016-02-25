@@ -15,10 +15,11 @@ import source         from 'vinyl-source-stream'
 import buffer         from 'vinyl-buffer'
 
 const conf = {
-  home:    './',
-  src:     './src',
-  assets:  './assets',
-  dist:    './dist',
+  home:      './',
+  src:       './src',
+  assets:    './assets',
+  dist:      './dist',
+  bootstrap: './bower_components/bootstrap-sass' 
 }
 
 gulp.task('server', () => {
@@ -68,8 +69,11 @@ function vendorJs() {
 }
 
 function vendorCss() {
-  return gulp.src(mainBowerFiles({filter: '**/*.{scss,css}'}))
-    //.pipe(sass.sync().on('error', sass.logError))
+  return gulp.src(conf.assets + '/scss/app.scss')
+    .pipe(sass({
+        includePaths: [conf.bootstrap + '/assets/stylesheets'],
+    }))
+    // .pipe(sass.sync().on('error', sass.logError))
     .pipe(concat('vendor.css'))
     .pipe(rev())
     .pipe(gulp.dest(conf.dist + '/css/'))
@@ -106,8 +110,9 @@ gulp.task('inject:app:js', ['clean:app:js'], function() {
 });
 
 gulp.task('copy:fonts', () => {
-  return gulp.src(mainBowerFiles({filter: '**/*.{ttf,woff,woff2}'}), {base: 'bower_components/bootstrap-css'})
-    .pipe(gulp.dest(conf.dist))
+  // return gulp.src(mainBowerFiles({filter: '**/*.{ttf,woff,woff2}'}), {base: './bower_components/bootstrap-sass'})
+  return gulp.src( conf.bootstrap + '/assets/fonts/**/*.{ttf,woff,woff2}')
+    .pipe(gulp.dest(conf.dist + '/fonts'))
 });
 
 gulp.task('build', () => {

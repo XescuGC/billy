@@ -1,0 +1,7 @@
+//Override bootstrap by loading our custom variables
+@import "./variables";
+//Loading Bootstrap 
+@import "bootstrap";
+@import "bootstrap/theme";
+
+//Rest of our app scss
