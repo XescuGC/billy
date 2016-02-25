@@ -4,10 +4,7 @@ import { connect }          from 'react-redux';
 class LogoSection extends Component {
   render() {
     return (
-      <h1 className="brand">
-        <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        Billy
-      </h1>
+      <h1 className="brand">Billy</h1>
     )
   }
 }
