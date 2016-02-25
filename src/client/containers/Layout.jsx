@@ -9,7 +9,7 @@ class Layout extends Component {
       <div>
         <div className='container-fluid'>
           <div className='row header-command'>
-            <div className='col-md-2'>
+            <div className='logo-container col-md-2'>
               <LogoSection />
             </div>
             <div className='col-md-10'>
@@ -17,10 +17,10 @@ class Layout extends Component {
             </div>
           </div>
           <div className='row main'>
-            <div className='col-md-2'>
+            <div className='sidebar-container col-md-2'>
               <SidebarSection />
             </div>
-            <div className='col-md-10'>
+            <div className='col-md-8 col-md-offset-1'>
               { this.props.children }
             </div>
           </div>
