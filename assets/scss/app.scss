@@ -9,6 +9,21 @@
 @import "bootstrap/theme";
 
 //Rest of our app scss (organize plz)
+:focus, input:focus{
+    outline: none;
+}
+
+.form-control {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid $brand-primary-dark;
+  box-shadow: none;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
 .sidebar-container {
   background-color: $brand-primary;
   height: 100%;
