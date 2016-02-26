@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import FormGroup            from './FormGroup';
+import Input                from './Input';
 
 class InvoicesViewItems extends Component{
-  //constructor(props) {
-    //super(props);
-
-    //let { invoice } = props;
-    //if (!invoice) invoice = {};
-    //if (!invoice.items) invoice.items = []
-    //this.state = {
-      //invoice: invoice
-    //}
-  //}
 
   render() {
     const { invoice } = this.props;
@@ -29,10 +20,10 @@ class InvoicesViewItems extends Component{
       return (
         <div className='row' key={idx}>
           <div className='col-md-8'>
-            <input type='text' name={`description[${idx+1}]`} value={item.description} className='form-control' />
+            <Input name={`description[${idx+1}]`} value={item.description}/>
           </div>
           <div className='col-md-4'>
-            <input type='text' name={`price[${idx+1}]`} value={item.price} className='form-control' />
+            <Input name={`price[${idx+1}]`} value={item.price} />
           </div>
         </div>
       );
@@ -68,9 +59,10 @@ class InvoicesViewItems extends Component{
 }
 
 InvoicesViewItems.propTypes = {
-  invoice:    React.PropTypes.object,
-  config:     React.PropTypes.object,
-  onAddItem:  React.PropTypes.func.isRequired,
+  invoice:       React.PropTypes.object,
+  config:        React.PropTypes.object,
+  onAddItem:     React.PropTypes.func.isRequired,
+  onChangeItem:  React.PropTypes.func.isRequired,
 }
 
 InvoicesViewItems.defaultProps = {

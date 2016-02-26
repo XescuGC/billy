@@ -35,13 +35,12 @@ CREATE TABLE invoice(
 CREATE TABLE config(
   key       TEXT PRIMARY KEY,
   value     TEXT,
-  is_stored INTEGER
 );
 
 -- INSERTING CONFIG
-INSERT INTO config (key, value, is_stored) values ('vat',       '21',    1);
-INSERT INTO config (key, value, is_stored) values ('currency',  '€',     1);
-INSERT INTO config (key, value, is_stored) values ('user:name', 'Cesc',  1);
+INSERT INTO config (key, value) values ('vat',       '21'  );
+INSERT INTO config (key, value) values ('currency',  '€'   );
+INSERT INTO config (key, value) values ('user:name', 'Cesc');
 
 -- INSERTING CLIENT
 INSERT INTO client (name, vat_number, address, province, locality, zipcode, country) values ('Pepito', 'C123456787', 'C/ Pepito', 'Barcelona', 'Barcelona', '08032', 'Spain');

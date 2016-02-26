@@ -34,7 +34,7 @@ Config.prototype.save = function() {
   return this.update();
 }
 
-const insertStatement = db.prepare('INSERT INTO config (key, value, is_stored) values ($key, $value, 1)');
+const insertStatement = db.prepare('INSERT INTO config (key, value) values ($key, $value)');
 Config.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {

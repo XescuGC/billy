@@ -17,7 +17,7 @@ class InvoicesViewSection extends Component {
         </div>
         <form id='create-invoice'>
           <InvoicesViewInformation invoice={invoices.invoice} config={config} />
-          <InvoicesViewItems invoice={invoices.invoice} config={config} onAddItem={this.onAddItem.bind(this)} />
+          <InvoicesViewItems invoice={invoices.invoice} config={config} onAddItem={this.onAddItem.bind(this)} onChangeItem={this.onChangeItem.bind(this)} />
           <InvoicesViewTotal invoice={invoices.invoice} config={config} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
         </form>
@@ -33,6 +33,10 @@ class InvoicesViewSection extends Component {
   }
 
   onAddItem(item) { this.props.dispatch(ServerActions.createItem(item)) }
+
+  onChangeItem(idx, item) {
+    console.log(idx, item)
+  }
 
   onCreateInvoice(e) {
     e.preventDefault();

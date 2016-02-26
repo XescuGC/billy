@@ -17,17 +17,17 @@ class InvoicesViewTotal extends Component {
             <tr>
               <th>PIT:</th>
               <td><Input name={'pit'} value={invoice.pit} /></td>
-              <td>{invoice.pitSubtotal} {config.currency}</td>
+              <td>{invoice.pitSubtotal||0} {config.currency}</td>
             </tr>
             <tr>
               <th>VAT:</th>
               <td><Input name={'vat'} value={invoice.vat} /></td>
-              <td>{invoice.vatSubtotal} {config.currency}</td>
+              <td>{invoice.vatSubtotal||0} {config.currency}</td>
             </tr>
             <tr>
               <th>Total:</th>
               <td></td>
-              <td>{invoice.total} {config.currency}</td>
+              <td>{invoice.total||0} {config.currency}</td>
             </tr>
           </tbody>
         </table>
