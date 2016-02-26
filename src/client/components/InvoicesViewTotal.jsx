@@ -14,11 +14,14 @@ class InvoicesViewTotal extends Component {
               <td></td>
               <td>{invoice.subtotal || 0} {config.currency}</td>
             </tr>
-            <tr>
-              <th>PIT:</th>
-              <td><Input name={'pit'} value={invoice.pit} /></td>
-              <td>{invoice.pitSubtotal||0} {config.currency}</td>
-            </tr>
+            { invoice.pit ?
+              <tr>
+                <th>PIT:</th>
+                <td><Input name={'pit'} value={invoice.pit} /></td>
+                <td>{invoice.pitSubtotal||0} {config.currency}</td>
+              </tr>
+              : undefined
+            }
             <tr>
               <th>VAT:</th>
               <td><Input name={'vat'} value={invoice.vat} /></td>
