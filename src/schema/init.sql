@@ -34,7 +34,7 @@ CREATE TABLE invoice(
 
 CREATE TABLE config(
   key       TEXT PRIMARY KEY,
-  value     TEXT,
+  value     TEXT
 );
 
 -- INSERTING CONFIG
