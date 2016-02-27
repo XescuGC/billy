@@ -24,9 +24,10 @@ class ClientsSection extends Component {
   newClient() {
     return (
       <button className='btn btn-success' onClick={this.goToNewClient.bind(this)}>
-        New Client
+        <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
+        &nbsp;New
       </button>
-    )
+    ) // TODO: remove nbsp and fix css
   }
 
   goToNewClient(e) {
