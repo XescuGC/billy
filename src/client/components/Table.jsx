@@ -16,17 +16,17 @@ class Table extends Component {
   }
 
   generateHeaders(columns) {
-    const { newBtn } = this.props;
-    let headers = columns.map(c => <th key={c} >{c}</th>);
-    if (newBtn) headers[headers.length-1] = (<th style={{textAlign: 'right'}} key='create'>{newBtn()}</th>);
+    const { header } = this.props;
+    let headers = columns.map(c => header[c] ? header[c]() : <th key={c} >{c}</th>);
     return headers;
   }
 
   generateBody(columns, items) {
+    const { row } = this.props;
     return items.map(i => {
       return (
         <tr key={i.id}>
-          { columns.map(c => <td key={c} style={ this.props[c] ? { textAlign: 'right' } : {} }>{ this.props[c] ? this.props[c](i) : i[c] }</td>) }
+          { columns.map(c => row[c] ? row[c](i) : <td key={c} >{i[c]}</td>) }
         </tr>
       )
     })
@@ -36,7 +36,13 @@ class Table extends Component {
 Table.propTypes = {
   items:    React.PropTypes.array.isRequired,
   columns:  React.PropTypes.array.isRequired,
-  create:   React.PropTypes.func,
+  header:  React.PropTypes.object,
+  row:     React.PropTypes.object,
+}
+
+Table.defaultProps = {
+  header: {},
+  row: {},
 }
 
 export default Table;

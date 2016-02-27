@@ -11,8 +11,12 @@ class InvoicesSection extends Component {
       <Table
         columns={['id', 'emitted', 'client_id', 'total', 'options']}
         items={invoices.items}
-        options={ this.renderOption.bind(this) }
-        newBtn={this.newInvoice.bind(this)}
+        header={{
+          options: this.renderHeaderOptions.bind(this)
+        }}
+        row={{
+          options: this.renderRowOptions.bind(this)
+        }}
       />
     )
   }
@@ -22,20 +26,24 @@ class InvoicesSection extends Component {
     if (!invoices.items.length) dispatch(ServerActions.fetchInvoices());
   }
 
-  renderOption(item) {
+  renderRowOptions(item) {
     return(
-      <button onClick={this.handleClickView.bind(this, item.id)} type="button" className="btn btn-primary">
-        View
-      </button>
+      <td key='options' style={{textAlign: 'right'}}>
+        <button onClick={this.handleClickView.bind(this, item.id)} type="button" className="btn btn-primary">
+          View
+        </button>
+      </td>
     )
   }
 
-  newInvoice() {
+  renderHeaderOptions() {
     return (
-      <button className='btn btn-success' onClick={this.goToNewInvoice.bind(this)} >
-        <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
-        &nbsp;New
-      </button>
+      <th style={{textAlign: 'right'}}  key='options'>
+        <button className='btn btn-success' onClick={this.goToNewInvoice.bind(this)} >
+          <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
+          &nbsp;New
+        </button>
+      </th>
     ) // TODO: remove nbsp and fix css
   }
 
