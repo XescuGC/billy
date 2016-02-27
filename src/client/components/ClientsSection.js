@@ -11,7 +11,9 @@ class ClientsSection extends Component {
       <Table
         columns={['id', 'name', 'options']}
         items={clients.items}
-        newBtn={this.newClient.bind(this)}
+        header={{
+          options: this.renderHeaderOptions.bind(this)
+        }}
       />
     )
   }
@@ -21,12 +23,14 @@ class ClientsSection extends Component {
     if (!clients.items.length) dispatch(ServerActions.fetchClients());
   }
 
-  newClient() {
+  renderHeaderOptions() {
     return (
-      <button className='btn btn-success' onClick={this.goToNewClient.bind(this)}>
-        <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
-        &nbsp;New
-      </button>
+      <th style={{textAlign: 'right'}}  key='options'>
+        <button className='btn btn-success' onClick={this.goToNewClient.bind(this)}>
+          <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
+          &nbsp;New
+        </button>
+      </th>
     ) // TODO: remove nbsp and fix css
   }
 
