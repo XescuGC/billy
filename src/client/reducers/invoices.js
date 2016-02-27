@@ -31,9 +31,7 @@ function invoiceItemReducer(state, action) {
 
   switch (action.type) {
     case ADD_ITEM:
-      const items = state.items;
-      items.push(payload.item)
-      return Object.assign({}, state, { items });
+      return Object.assign({}, state, { items: [...state.items, payload.item] });
       break;
     case UPDATE_INVOICE_CONFIG:
       return Object.assign({}, state, { pit: payload.pit*1, vat: payload.vat*1 });
@@ -45,17 +43,14 @@ function invoiceItemReducer(state, action) {
 }
 
 function recalculateTotal(state, action) {
-  console.log(state);
-  if (state.invoice.vat && state.invoice.pit) {
-    const subtotal = state.invoice.items.reduce((c, n) => c + n.price*1, 0);
-    const vatSubtotal = subtotal * (state.invoice.vat /100);
-    const pitSubtotal = subtotal * (state.invoice.pit /100);
-    const total = subtotal + vatSubtotal - pitSubtotal;
-    return Object.assign(
-      {}, state, { invoice: Object.assign(
-        {}, state.invoice, { total: total.toFixed(2), pitSubtotal: pitSubtotal.toFixed(2), vatSubtotal: vatSubtotal.toFixed(2), subtotal: subtotal.toFixed(2) }
-      )});
-  }
+  const subtotal = state.invoice.items.reduce((c, n) => c + n.price*1, 0);
+  const vatSubtotal = (subtotal * state.invoice.vat||0) / 100;
+  const pitSubtotal = (subtotal * state.invoice.pit||0) / 100;
+  const total = subtotal + vatSubtotal - pitSubtotal;
+  return Object.assign(
+    {}, state, { invoice: Object.assign(
+      {}, state.invoice, { total: total.toFixed(2), pitSubtotal: pitSubtotal.toFixed(2), vatSubtotal: vatSubtotal.toFixed(2), subtotal: subtotal.toFixed(2) }
+    )});
   return state;
 }
 

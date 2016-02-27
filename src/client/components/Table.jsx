@@ -17,8 +17,8 @@ class Table extends Component {
 
   generateHeaders(columns) {
     const { newBtn } = this.props;
-    const headers = columns.map(c => <th key={c} >{c}</th>);
-    if (newBtn) headers.push(<th style={{width: '100px'}} key='create'>{newBtn()}</th>);
+    let headers = columns.map(c => <th key={c} >{c}</th>);
+    if (newBtn) headers[headers.length-1] = (<th style={{textAlign: 'right'}} key='create'>{newBtn()}</th>);
     return headers;
   }
 
@@ -26,7 +26,7 @@ class Table extends Component {
     return items.map(i => {
       return (
         <tr key={i.id}>
-          { columns.map(c => <td key={c} >{ this.props[c] ? this.props[c](i) : i[c] }</td>) }
+          { columns.map(c => <td key={c} style={ this.props[c] ? { textAlign: 'right' } : {} }>{ this.props[c] ? this.props[c](i) : i[c] }</td>) }
         </tr>
       )
     })

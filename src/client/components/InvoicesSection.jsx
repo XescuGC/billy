@@ -33,9 +33,10 @@ class InvoicesSection extends Component {
   newInvoice() {
     return (
       <button className='btn btn-success' onClick={this.goToNewInvoice.bind(this)} >
-        New Invoice
+        <span className='glyphicon glyphicon-plus' ariaHidden='true'></span>
+        &nbsp;New
       </button>
-    )
+    ) // TODO: remove nbsp and fix css
   }
 
   goToNewInvoice(e) {
