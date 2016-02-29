@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect }          from 'react-redux';
 import Input                from './Input';
 
 class InvoicesViewTotal extends Component {
@@ -17,14 +16,14 @@ class InvoicesViewTotal extends Component {
             { invoice.pit ?
               <tr>
                 <th>PIT:</th>
-                <td><Input name={'pit'} value={invoice.pit} /></td>
+                <td><Input name={'pit'} value={invoice.pit} onChange={this.onConfigChange.bind(this)} ref='pit' /></td>
                 <td>{invoice.pitSubtotal||0} {config.currency}</td>
               </tr>
               : undefined
             }
             <tr>
               <th>VAT:</th>
-              <td><Input name={'vat'} value={invoice.vat} /></td>
+              <td><input type='text' className='form-control' name={'vat'} value={invoice.vat} onChange={this.onConfigChange.bind(this)} ref='vat' /></td>
               <td>{invoice.vatSubtotal||0} {config.currency}</td>
             </tr>
             <tr>
@@ -37,11 +36,16 @@ class InvoicesViewTotal extends Component {
       </div>
     )
   }
+
+  onConfigChange(e) {
+    this.props.onConfigUpdate(this.refs.vat.value, this.refs.pit ? this.refs.pit.value : 0 );
+  }
 }
 
 InvoicesViewTotal.propTypes = {
-  invoice:  React.PropTypes.object,
-  config:   React.PropTypes.object,
+  invoice:        React.PropTypes.object,
+  config:         React.PropTypes.object,
+  onConfigUpdate: React.PropTypes.func.isRequired,
 }
 
 InvoicesViewTotal.defaultProps = {

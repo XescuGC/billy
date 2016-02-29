@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 class Table extends Component {
   render() {
     const { columns, items } = this.props;
-    const headers = this.generateHeaders(columns);
-    const body = this.generateBody(columns, items);
+
     return (
       <table className="table table-striped">
         <thead>
-          <tr>{ headers }</tr>
+          <tr>{ this.generateHeaders(columns) }</tr>
         </thead>
-        <tbody>{ body }</tbody>
+        <tbody>{ this.generateBody(columns, items) }</tbody>
       </table>
     )
   }

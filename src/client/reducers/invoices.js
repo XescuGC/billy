@@ -11,14 +11,12 @@ export default function reducer(state=initialState, action) {
   let { payload } = action;
 
   switch (action.type) {
+    case UPDATE_INVOICE_CONFIG:
     case ADD_ITEM:
       return [bindInvoiceAction, recalculateTotal].reduce(pipeReducer.bind({payload, action}), state);
       break;
     case LOAD_INVOICES:
       return Object.assign({}, state, { items: payload.invoices });
-      break;
-    case UPDATE_INVOICE_CONFIG:
-      return bindInvoiceAction(state, payload, action)
       break;
     default:
       return state;
