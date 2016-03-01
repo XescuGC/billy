@@ -7,7 +7,7 @@ invoices.get('/', (req, res, next) => {
   Invoice.find().then(invoices => {
     const items = invoices.map( i => i.toJSON() );
     if (req.xhr) return res.status(200).json(items);
-    res.locals.state.invoices = { items };
+    res.locals.state.invoices = { items, invoice: { items: [] } };
     next();
   }).catch(err => {
     console.trace(err);

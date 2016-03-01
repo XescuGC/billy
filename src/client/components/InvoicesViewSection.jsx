@@ -16,7 +16,7 @@ class InvoicesViewSection extends Component {
           <h1>New Invoice</h1>
         </div>
         <form id='create-invoice'>
-          <InvoicesViewInformation invoice={invoice} config={config} />
+          <InvoicesViewInformation invoice={invoice} config={config} onClientChange={this.handleClientChange.bind(this)} />
           <InvoicesViewItems invoice={invoice} config={config} onAddItem={this.onAddItem.bind(this)} onChangeItem={this.onChangeItem.bind(this)} />
           <InvoicesViewTotal invoice={invoice} config={config} onConfigUpdate={this.handleConfigUpdate.bind(this)} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
@@ -27,6 +27,7 @@ class InvoicesViewSection extends Component {
 
   componentDidMount() {
     const { invoice, config } = this.props;
+    console.log(invoice);
     if (!invoice.vat) this.handleConfigUpdate( config.vat, config.pit );
   }
 
@@ -39,7 +40,12 @@ class InvoicesViewSection extends Component {
 
   handleConfigUpdate(vat, pit) {
     const { dispatch } = this.props;
-      dispatch(InvoiceActions.updateInvoiceConfig({ vat, pit }));
+    dispatch(InvoiceActions.updateInvoiceConfig({ vat, pit }));
+  }
+
+  handleClientChange(client) {
+    const { dispatch } = this.props;
+    dispatch( InvoiceActions.updateInvoiceClient( client ) );
   }
 
   onCreateInvoice(e) {

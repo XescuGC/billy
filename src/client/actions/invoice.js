@@ -11,3 +11,7 @@ export function addItem(item) {
 export function updateInvoiceConfig({vat, pit}) {
   return { type: ActionTypes.UPDATE_INVOICE_CONFIG, payload: { vat, pit } };
 }
+
+export function updateInvoiceClient(client) {
+  return { type: ActionTypes.UPDATE_INVOICE_CLIENT, payload: { client } };
+}
