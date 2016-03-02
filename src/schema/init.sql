@@ -19,13 +19,7 @@ CREATE TABLE item(
 CREATE TABLE invoice(
   id                INTEGER PRIMARY KEY AUTOINCREMENT,
   client_id         INTEGER REFERENCES client(id),
-  client_name       TEXT,
-  client_vat_number TEXT,
-  client_address    TEXT,
-  client_province   TEXT,
-  client_locality   TEXT,
-  client_zipcode    TEXT,
-  client_country    TEXT,
+  client            TEXT,    -- JSON
   emitted           INTEGER,
   vat               INTEGER,
   pit               INTEGER, -- IRPF

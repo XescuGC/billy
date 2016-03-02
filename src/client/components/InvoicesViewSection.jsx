@@ -50,9 +50,7 @@ class InvoicesViewSection extends Component {
 
   onCreateInvoice(e) {
     e.preventDefault();
-    let invoice = {};
-    $('#create-invoice').serializeArray().forEach( i => invoice[i.name] = i.value );
-    this.props.dispatch(ServerActions.createInvoice(invoice));
+    this.props.dispatch(ServerActions.createInvoice(this.props.invoice));
   }
 }
 

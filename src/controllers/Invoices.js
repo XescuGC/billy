@@ -11,14 +11,20 @@ invoices.get('/', (req, res, next) => {
     next();
   }).catch(err => {
     console.trace(err);
-    res.status(422).json({ error: err.toString() })
+    res.status(422).json({ error: err.toString() });
   })
 });
 
 invoices.post('/new', (req, res, next) => {
-  // TODO Create a new Invoice
-  console.log(req.body);
-  res.status(201).json({});
+  let invoice = new Invoice(req.body);
+  invoice.save().then( invoice => {
+    console.log(invoice);
+    res.status(201).json({ invoice });
+  }).catch( err => {
+    console.trace(err);
+    res.status(422).json({ error: err.toString() });
+  });
+
 })
 
 export default invoices;

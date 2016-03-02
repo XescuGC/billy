@@ -17,29 +17,41 @@ Invoice.has({
   pit:       { is: 'rw' },
   vat:       { is: 'rw' },
   status:    { is: 'rw', default: 'draft' },
+  items:     { is: 'rw', default: [] }
 });
 
 Invoice.prototype.toJSON = function() {
   return { client_id: this.client_id, emitted: this.emitted.toString(), id: this.id }
 };
 
-Invoice.prototype.items = function() {
-  //TODO
-}
-
 Invoice.prototype.save = function() {
-  if ( this.id ) return this.insert();
-  return this.update();
+  if ( this.id ) return this.update();
+  return this.insert();
 }
 
-const insertStatement = db.prepare('INSERT INTO invoice (client_id, emitted) values ($client_id, $emitted)');
+
+
+const insertStatement = db.prepare('INSERT INTO invoice (client_id, client, emitted, pit, vat, status) values ($client_id, $client, $emitted, $pit, $vat, $status)');
 Invoice.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( insertStatement, this._binded(), function(err) {
-      if (err) return reject(err);
-      $this.id = this.lastID;
-      resolve();
+    let client = this.client;
+    if ( this.client.id ) {
+      this.client_id = this.client.id;
+      delete this.client.id;
+    }
+    else {
+      let newClient = new Client(this.client);
+      client = newClient.save();
+    }
+
+    return Promise.resolve(client).then( client => {
+      $this.client_id = client.id;
+      insertStatement.run( this._binded(), function(err) {
+        if (err) return reject(err);
+        $this.id = this.lastID;
+        resolve($this);
+      });
     });
   });
 }
@@ -79,17 +91,21 @@ Invoice._inflate = function(row) {
   // TODO: Build de date
   row.emitted = new Date(row.emitted);
   if (row.client) row.client = JSON.parse(row.client);
+
   return new Invoice(row);
 }
 
 Invoice.prototype._binded = function() {
   let attrs = {
-    $emmited:   Math.floor( this.emmited.getTime() / 1000 ), //TODO: formatear para SQL
+    $emmited: Math.floor( this.emmited.getTime() / 1000 ), //TODO: formatear para SQL
+    $pit:     this.pit,
+    $vat:     this.vat,
+    $status:  this.status,
   };
   if (attrs.client) {
     attrs['$client'] = JSON.stringify(this.client);
-    attrs['$client_id'] = this.client_id;
-  } else if (attrs.client_id) {
+  }
+  if (attrs.client_id) {
     attrs['$client_id'] = this.client_id;
   }
   if ( this.id ) attrs.$id = this.id;

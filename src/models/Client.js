@@ -23,7 +23,6 @@ Client.prototype.save = function() {
 
 const insertStatement = db.prepare('INSERT INTO client (name, vat_number, address, province, locality, zipcode, country) values ($name, $vat_number, $address, $province, $locality, $zipcode, $country)');
 Client.prototype.insert = function() {
-  console.log('insert');
   let $this = this;
   return new Promise( (resolve, reject) => {
     insertStatement.run( this._binded(), function(err) {
@@ -36,7 +35,6 @@ Client.prototype.insert = function() {
 
 const updateStatment = db.prepare('UPDATE client set name=$name, vat_number=$vat_number, address=$address, province=$province, locality=$locality, zipcode=$zipcode, country=$country WHERE id=$id');
 Client.prototype.update = function() {
-  console.log('update');
   return new Promise( (resolve, reject) => {
     updateStatment.run( this._binded(), function(err) {
         if (err) return reject(err);
