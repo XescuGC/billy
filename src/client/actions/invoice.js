@@ -1,7 +1,16 @@
 import * as ActionTypes from '../constants/Invoice';
+import { batchActions } from 'redux-batched-actions';
+import { pushPath }     from 'redux-simple-router';
 
 export function loadInvoices(invoices) {
   return { type: ActionTypes.LOAD_INVOICES, payload: { invoices } };
+}
+
+export function selectInvoice(invoice) {
+  return batchActions([
+    { type: ActionTypes.SELECT_INVOICE, payload: { invoice } },
+    pushPath(`/invoices/${invoice.id}`)
+  ])
 }
 
 export function addItem(item) {

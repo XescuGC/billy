@@ -3,6 +3,7 @@ import { connect }          from 'react-redux';
 import { pushPath }         from 'redux-simple-router';
 import Table                from './Table';
 import * as ServerActions   from '../actions/server';
+import * as InvoceActions   from '../actions/invoice';
 
 class InvoicesSection extends Component {
   render() {
@@ -26,10 +27,10 @@ class InvoicesSection extends Component {
     if (!invoices.items.length) dispatch(ServerActions.fetchInvoices());
   }
 
-  renderRowOptions(item) {
+  renderRowOptions(invoice) {
     return(
       <td key='options' style={{textAlign: 'right'}}>
-        <button onClick={this.handleClickView.bind(this, item.id)} type="button" className="btn btn-primary">
+        <button onClick={this.handleClickView.bind(this, invoice)} type="button" className="btn btn-primary">
           View
         </button>
       </td>
@@ -52,9 +53,9 @@ class InvoicesSection extends Component {
     this.props.dispatch(pushPath('/invoices/new'));
   }
 
-  handleClickView(invoiceId, e) {
+  handleClickView(invoice, e) {
     e.preventDefault();
-    this.props.dispatch(pushPath(`/invoices/${invoiceId}`));
+    this.props.dispatch(InvoceActions.selectInvoice(invoice))
   }
 }
 

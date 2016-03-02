@@ -1,4 +1,4 @@
-import { LOAD_INVOICES, ADD_ITEM, UPDATE_INVOICE_CONFIG, UPDATE_INVOICE_CLIENT } from '../constants/Invoice';
+import { SELECT_INVOICE, LOAD_INVOICES, ADD_ITEM, UPDATE_INVOICE_CONFIG, UPDATE_INVOICE_CLIENT } from '../constants/Invoice';
 import { pipeReducer }             from '../utils';
 
 
@@ -15,6 +15,7 @@ export default function reducer(state=initialState, action) {
     case ADD_ITEM:
       return [bindInvoiceAction, recalculateTotal].reduce(pipeReducer.bind({payload, action}), state);
       break;
+    case SELECT_INVOICE:
     case UPDATE_INVOICE_CLIENT:
       return bindInvoiceAction( state, payload, action );
       break;
@@ -36,6 +37,9 @@ function invoiceReducer(state, action) {
       break;
     case UPDATE_INVOICE_CONFIG:
       return Object.assign({}, state, { pit: payload.pit*1, vat: payload.vat*1 });
+      break;
+    case SELECT_INVOICE:
+      return Object.assign({}, payload.invoice);
       break;
     case UPDATE_INVOICE_CLIENT:
       return Object.assign({}, state, { client: payload.client });

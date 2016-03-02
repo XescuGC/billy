@@ -21,15 +21,22 @@ Invoice.has({
 });
 
 Invoice.prototype.toJSON = function() {
-  return { client_id: this.client_id, emitted: this.emitted.toString(), id: this.id }
+  return {
+    id:         this.id,
+    client_id:  this.client_id,
+    client:     this.client,
+    emitted:    this.emitted.toString(),
+    pit:        this.pit,
+    vat:        this.vat,
+    status:     this.status,
+    items:      this.items,
+  }
 };
 
 Invoice.prototype.save = function() {
   if ( this.id ) return this.update();
   return this.insert();
 }
-
-
 
 const insertStatement = db.prepare('INSERT INTO invoice (client_id, client, emitted, pit, vat, status) values ($client_id, $client, $emitted, $pit, $vat, $status)');
 Invoice.prototype.insert = function() {
@@ -52,11 +59,11 @@ Invoice.prototype.insert = function() {
         $this.id = this.lastID;
         resolve($this);
       });
-    });
+    }).catch(err => reject(err) );
   });
 }
 
-const updateStatement = db.prepare('UPDATE invoice set client_id=$client_id, emitted=$emmited WHERE id=$id');
+const updateStatement = db.prepare('UPDATE invoice set client_id=$client_id, emitted=$emmitted WHERE id=$id');
 Invoice.prototype.update = function() {
   return new Promise( (resolve, reject) => {
     db.run( updateStatement, this._binded(), function(err) {
@@ -90,6 +97,9 @@ Invoice.findOne = function(id) {
 Invoice._inflate = function(row) {
   // TODO: Build de date
   row.emitted = new Date(row.emitted);
+  Object.keys(row).forEach(key => {
+    if (!row[key]) delete row[key];
+  })
   if (row.client) row.client = JSON.parse(row.client);
 
   return new Invoice(row);
@@ -97,15 +107,15 @@ Invoice._inflate = function(row) {
 
 Invoice.prototype._binded = function() {
   let attrs = {
-    $emmited: Math.floor( this.emmited.getTime() / 1000 ), //TODO: formatear para SQL
+    $emitted: Math.floor( this.emitted.getTime() / 1000 ), //TODO: formatear para SQL
     $pit:     this.pit,
     $vat:     this.vat,
     $status:  this.status,
   };
-  if (attrs.client) {
+  if (this.client) {
     attrs['$client'] = JSON.stringify(this.client);
   }
-  if (attrs.client_id) {
+  if (this.client_id) {
     attrs['$client_id'] = this.client_id;
   }
   if ( this.id ) attrs.$id = this.id;
