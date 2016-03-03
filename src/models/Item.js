@@ -13,6 +13,11 @@ Item.has({
   price:       { is: 'rw', isa: 'number' },
 });
 
+Item.prototype.beforeInitialize = function(attrs) {
+  attrs.price *= 1; // Coerce!
+  return attrs;
+}
+
 Item.prototype.toJSON = function() {
   return { id: this.id, invoice_id: this.invoice_id, description: this.description, price: this.price }
 };
@@ -21,7 +26,7 @@ Item.prototype.toJSON = function() {
 Item.prototype.invoice = function() { Invoice.findOne(this.invoice_id) }
 
 Item.prototype.save = function() {
-  if ( this.id ) return this.insert();
+  if ( !this.id ) return this.insert();
   return this.update();
 }
 
@@ -29,20 +34,21 @@ const insertStatement = db.prepare('INSERT INTO item (invoice_id, description, p
 Item.prototype.insert = function() {
   let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( insertStatemen, this._binded(), function(err) {
+    insertStatement.run( this._binded(), function(err) {
       if (err) return reject(err);
       $this.id = this.lastID;
-      resolve();
+      resolve($this);
     });
   });
 }
 
 const updateStatement = db.prepare('UPDATE item set invoice_id=$invoice_id, description=$description, price=$price WHERE id=$id');
 Item.prototype.update = function() {
+  let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( updateStatement, this._binded(), function(err) {
+    updateStatement.run( this._binded(), function(err) {
         if (err) return reject(err);
-        resolve();
+        resolve($this);
     });
   });
 }
@@ -50,10 +56,11 @@ Item.prototype.update = function() {
 const deleteStatement = db.prepare('DELETE FROM item WHERE id=$id');
 Item.prototype.delete = function() {
   if ( !this.id ) throw( new Error('Unable to delete befor insert!') );
+  let $this = this;
   return new Promise( (resolve, reject) => {
-    db.run( deleteStatement, { $id: this.id }, function(err) {
+    deleteStatement.run( { $id: this.id }, function(err) {
       if (err) return reject(err);
-      resolve();
+      resolve($this);
     });
   });
 }

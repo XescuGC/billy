@@ -29,7 +29,7 @@ Invoice.prototype.toJSON = function() {
     pit:        this.pit,
     vat:        this.vat,
     status:     this.status,
-    items:      this.items,
+    items:      this.items.map( item => item.toJSON() ),
   }
 };
 
@@ -40,26 +40,36 @@ Invoice.prototype.save = function() {
 
 const insertStatement = db.prepare('INSERT INTO invoice (client_id, client, emitted, pit, vat, status) values ($client_id, $client, $emitted, $pit, $vat, $status)');
 Invoice.prototype.insert = function() {
-  let $this = this;
-  return new Promise( (resolve, reject) => {
-    let client = this.client;
-    if ( this.client.id ) {
-      this.client_id = this.client.id;
-      delete this.client.id;
-    }
-    else {
-      let newClient = new Client(this.client);
-      client = newClient.save();
-    }
+  let client = this.client;
+  if ( this.client.id ) {
+    this.client_id = this.client.id;
+    delete this.client.id;
+  }
+  else {
+    let newClient = new Client(this.client);
+    client = newClient.save();
+  }
 
-    return Promise.resolve(client).then( client => {
-      $this.client_id = client.id;
+  let $this = this;
+  return Promise.resolve(client).then( client => {
+    $this.client_id = client.id;
+    return new Promise( (resolve, reject) => {
       insertStatement.run( this._binded(), function(err) {
         if (err) return reject(err);
         $this.id = this.lastID;
-        resolve($this);
+        resolve($this)
       });
-    }).catch(err => reject(err) );
+    });
+  }).then( invoice => {
+    return Promise.all( invoice.items.map( item => {
+      item.invoice_id = invoice.id;
+      item = new Item(item);
+      return item.save();
+    })).then( items => {
+      invoice.items = items;
+      return invoice;
+      resolve($this);
+    });
   });
 }
 
@@ -95,19 +105,23 @@ Invoice.findOne = function(id) {
 }
 
 Invoice._inflate = function(row) {
-  // TODO: Build de date
   row.emitted = new Date(row.emitted);
+  // Prevent null values on the object
   Object.keys(row).forEach(key => {
     if (!row[key]) delete row[key];
   })
   if (row.client) row.client = JSON.parse(row.client);
 
-  return new Invoice(row);
+  return Item.find({ where: { invoice_id: row.id } }).then( items => {
+    row.items = items;
+    return new Invoice(row);
+  });
+
 }
 
 Invoice.prototype._binded = function() {
   let attrs = {
-    $emitted: Math.floor( this.emitted.getTime() / 1000 ), //TODO: formatear para SQL
+    $emitted: this.emitted.getTime(), //TODO: formatear para SQL
     $pit:     this.pit,
     $vat:     this.vat,
     $status:  this.status,

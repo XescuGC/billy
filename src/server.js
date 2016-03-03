@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   } else { next() }
 });
 
-app.use('/', Controllers.Invoices);
+//app.use('/', Controllers.Invoices);
 app.use('/invoices', Controllers.Invoices);
 app.use('/clients', Controllers.Clients);
 app.use('/invoice_lines', Controllers.InvoiceLines);
