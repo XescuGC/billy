@@ -1,4 +1,4 @@
-import { SELECT_INVOICE, LOAD_INVOICES, ADD_ITEM, UPDATE_INVOICE_CONFIG, UPDATE_INVOICE_CLIENT } from '../constants/Invoice';
+import { SELECT_INVOICE, LOAD_INVOICES, ADD_ITEM, UPDATE_INVOICE_CONFIG, UPDATE_INVOICE_CLIENT, REMOVE_INVOICE } from '../constants/Invoice';
 import { pipeReducer }             from '../utils';
 
 
@@ -21,6 +21,9 @@ export default function reducer(state=initialState, action) {
       break;
     case LOAD_INVOICES:
       return Object.assign({}, state, { items: payload.invoices });
+      break;
+    case REMOVE_INVOICE:
+      return Object.assign({}, state, { items: state.items.filter( item => item.id !== payload.invoice.id) });
       break;
     default:
       return state;

@@ -1,12 +1,12 @@
 const ORIGIN = 'http://localhost:5000';
-const METHODS = { get:  'GET', post: 'POST' };
 const ROUTES = {
-  'clients'           : { method: METHODS.get,  url: `${ORIGIN}/clients`      },
-  'config'            : { method: METHODS.get,  url: `${ORIGIN}/config`       },
-  'invoices'          : { method: METHODS.get,  url: `${ORIGIN}/invoices`     },
-  'createClient'      : { method: METHODS.post, url: `${ORIGIN}/clients/new`  },
-  'createInvoice'     : { method: METHODS.post, url: `${ORIGIN}/invoices/new` },
-  'updateConfig'      : { method: METHODS.post, url: `${ORIGIN}/config`       },
+  'clients'           : { method: 'GET',    url: `${ORIGIN}/clients`      },
+  'config'            : { method: 'GET',    url: `${ORIGIN}/config`       },
+  'invoices'          : { method: 'GET',    url: `${ORIGIN}/invoices`     },
+  'createClient'      : { method: 'POST',   url: `${ORIGIN}/clients/new`  },
+  'createInvoice'     : { method: 'POST',   url: `${ORIGIN}/invoices/new` },
+  'updateConfig'      : { method: 'POST',   url: `${ORIGIN}/config`       },
+  'deleteInvoice'     : { method: 'DELETE', url: `${ORIGIN}/invoices/:id` },
 }
 
 const querySerializer = (obj, prefix) => {
@@ -41,13 +41,13 @@ export default function request ( routeName, query ) {
 
   [ route, query ] = injectToUrl(route, query);
 
-  if (conf.method === METHODS.get ) {
+  if (conf.method === 'GET' ) {
     conf.url = `${route.url}?${querySerializer(query)}`
-  } else if (conf.method === METHODS.post ) {
+  } else if (conf.method === 'POST' ) {
     conf.url = route.url;
     conf.data = query;
   } else {
-    throw new Error(`Not a valid method! ${conf.method}`);
+    conf.url = route.url;
   }
 
   return $.ajax(conf).then( (data, textStatus, jqXHR) => data );

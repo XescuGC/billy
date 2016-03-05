@@ -30,6 +30,9 @@ class InvoicesSection extends Component {
   renderRowOptions(invoice) {
     return(
       <td key='options' style={{textAlign: 'right'}}>
+        <button onClick={this.handleClickDelete.bind(this, invoice)} type="button" className="btn btn-danger">
+          Delete
+        </button>
         <button onClick={this.handleClickView.bind(this, invoice)} type="button" className="btn btn-primary">
           View
         </button>
@@ -55,7 +58,13 @@ class InvoicesSection extends Component {
 
   handleClickView(invoice, e) {
     e.preventDefault();
-    this.props.dispatch(InvoceActions.selectInvoice(invoice))
+    this.props.dispatch(InvoceActions.selectInvoice(invoice));
+  }
+
+  handleClickDelete(invoice, e) {
+    //TODO: show a modal component to confirm this destructive action!
+    e.preventDefault();
+    this.props.dispatch(ServerActions.deleteInvoice(invoice));
   }
 }
 

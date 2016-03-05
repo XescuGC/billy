@@ -24,3 +24,7 @@ export function updateInvoiceConfig({vat, pit}) {
 export function updateInvoiceClient(client) {
   return { type: ActionTypes.UPDATE_INVOICE_CLIENT, payload: { client } };
 }
+
+export function removeInvoice(invoice) {
+  return { type: ActionTypes.REMOVE_INVOICE, payload: { invoice } };
+}

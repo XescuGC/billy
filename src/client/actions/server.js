@@ -1,7 +1,7 @@
 import { batchActions } from 'redux-batched-actions';
 import { request } from '../utils';
 import { loadClients } from './client';
-import { loadInvoices, addItem } from './invoice';
+import { loadInvoices, addItem, removeInvoice } from './invoice';
 import { loadConfig } from './config';
 import * as ActionTypes from '../constants/Server';
 
@@ -85,6 +85,15 @@ export function createInvoice(invoice) {
         fetched()
         //loadClients(json),
       ]));
+    });
+  };
+}
+
+export function deleteInvoice(invoice) {
+  return dispatch => {
+    dispatch(fetching());
+    request('deleteInvoice', invoice).then(json => {
+      dispatch(batchActions([ fetched(), removeInvoice(invoice) ]));
     });
   };
 }

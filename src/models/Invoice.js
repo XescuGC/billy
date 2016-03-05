@@ -87,9 +87,9 @@ const deleteStatement = db.prepare('DELETE FROM invoice WHERE id=$id');
 Invoice.prototype.delete = function() {
   if ( !this.id ) throw( new Error('Unable to delete befor insert!') );
   return new Promise( (resolve, reject) => {
-    db.run( deleteStatement, { $id: this.id }, function(err) {
+    deleteStatement.run({ $id: this.id }, function(err) {
       if (err) return reject(err);
-      resolve();
+      resolve(true);
     });
   });
 }
