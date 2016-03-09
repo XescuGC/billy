@@ -15,6 +15,12 @@ invoices.get('/', (req, res, next) => {
   })
 });
 
+invoices.get('/new', (req, res, next) => {
+    res.locals.state.invoices = { items: [], invoice: { items: [] } };
+    res.locals.done = true;
+    next();
+});
+
 invoices.post('/new', (req, res, next) => {
   let invoice = new Invoice(req.body);
   invoice.save().then( invoice => {
@@ -26,6 +32,7 @@ invoices.post('/new', (req, res, next) => {
 })
 
 invoices.use('/:id', (req, res, next) => {
+  if ( res.locals.done ) return next();
   Invoice.findOne(req.params.id).then(invoice => {
     if ( !invoice ) throw(`Missing invoice ${req.params.id}`);
     res.locals.invoice = invoice;
@@ -37,6 +44,7 @@ invoices.use('/:id', (req, res, next) => {
 });
 
 invoices.get('/:id', (req, res, next) => {
+  if ( res.locals.done ) return next();
   if (req.xhr) return res.status(200).json( res.locals.invoice.toJSON() );
   res.locals.state.invoices = { invoice: res.locals.invoice.toJSON(), items: [] };
   next();

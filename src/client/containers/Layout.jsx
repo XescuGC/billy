@@ -28,6 +28,10 @@ class Layout extends Component {
       </div>
     )
   }
+
+  renderSimple(content) {
+    return ( <div> { content } </div> );
+  }
 }
 
 export default Layout;

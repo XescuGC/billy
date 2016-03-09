@@ -9,17 +9,19 @@ import InvoicePreview        from './components/InvoicePreview';
 import ConfigSection         from './components/ConfigSection';
 
 function getRoutes() {
-  return (
+  return [
     <Route path='/' component={Layout} >
-      <IndexRoute component={InvoicesSection} />
-      <Route path='/invoices' component={InvoicesSection} />
-      <Route path='/invoices/new' component={InvoicesViewSection} />
-      <Route path='/invoices/:id' component={InvoicesViewSection} />
-      <Route path='/invoices/:id/preview' component={InvoicePreview} />
-      <Route path='/clients' component={ClientsSection} />
-      <Route path='/clients/new' component={ClientsNewSection} />
-      <Route path='/config' component={ConfigSection} />
+      <IndexRoute                component={InvoicesSection} />
+      <Route path='invoices'     component={InvoicesSection} />
+      <Route path='invoices/new' component={InvoicesViewSection} />
+      <Route path='invoices/:id' component={InvoicesViewSection} />
+      <Route path='clients'      component={ClientsSection} />
+      <Route path='clients/new'  component={ClientsNewSection} />
+      <Route path='config'       component={ConfigSection} />
     </Route>
-  )
+    ,
+    <Route path='invoices/:id/preview' component={InvoicePreview} />
+  ]
 }
+
 export default getRoutes;

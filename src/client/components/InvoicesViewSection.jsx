@@ -1,5 +1,6 @@
 import React, { Component }     from 'react';
 import { connect }              from 'react-redux';
+import { pushPath }             from 'redux-simple-router';
 import * as ServerActions       from '../actions/server';
 import * as InvoiceActions      from '../actions/invoice';
 import FormGroup                from './FormGroup';
@@ -20,6 +21,7 @@ class InvoicesViewSection extends Component {
           <InvoicesViewItems invoice={invoice} config={config} onAddItem={this.onAddItem.bind(this)} onChangeItem={this.onChangeItem.bind(this)} />
           <InvoicesViewTotal invoice={invoice} config={config} onConfigUpdate={this.handleConfigUpdate.bind(this)} />
           <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
+          <button className='btn btn-info' onClick={this.goToPreviewInvoice.bind(this)}>Preview</button>
         </form>
       </div>
     )
@@ -51,6 +53,12 @@ class InvoicesViewSection extends Component {
   onCreateInvoice(e) {
     e.preventDefault();
     this.props.dispatch(ServerActions.createInvoice(this.props.invoice));
+  }
+
+  goToPreviewInvoice(e) {
+    e.preventDefault();
+    const { dispatch, invoice } = this.props;
+    dispatch(pushPath(`/invoices/${invoice.id || 'draft'}/preview`));
   }
 }
 
