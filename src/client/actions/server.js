@@ -34,7 +34,7 @@ export function updateConfig(config) {
     request('updateConfig', config).then(json => {
       dispatch(batchActions([
         fetched(),
-        //updateConfig(json),
+        loadConfig(json)
       ]))
     });
   };
@@ -81,10 +81,8 @@ export function createInvoice(invoice) {
   return dispatch => {
     dispatch(fetching());
     request('createInvoice', invoice).then(json => {
-      dispatch(batchActions([
-        fetched()
-        //loadClients(json),
-      ]));
+      dispatch(fetched());
+      dispatch(fetchInvoices());
     });
   };
 }

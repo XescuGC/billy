@@ -43,6 +43,12 @@ invoices.use('/:id', (req, res, next) => {
   })
 });
 
+invoices.post('/:id', (req, res, next) => {
+  if ( res.locals.done ) return next();
+  //TODO: update invoice
+  next();
+});
+
 invoices.get('/:id', (req, res, next) => {
   if ( res.locals.done ) return next();
   if (req.xhr) return res.status(200).json( res.locals.invoice.toJSON() );
