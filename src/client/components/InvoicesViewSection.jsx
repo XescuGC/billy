@@ -14,13 +14,23 @@ class InvoicesViewSection extends Component {
     return (
       <div>
         <div className='page-header'>
-          <h1>New Invoice</h1>
+          <div className="form-inline pull-right">
+            <div className="form-group">
+              <label for="num">Number: </label>
+              <input type="text" className="form-control" id="num" />
+            </div>
+          </div>
+          <h1>{ invoice.id ? 'Edit' : 'New'} invoice</h1>
         </div>
         <form id='create-invoice'>
           <InvoicesViewInformation invoice={invoice} config={config} onClientChange={this.handleClientChange.bind(this)} />
           <InvoicesViewItems invoice={invoice} config={config} onAddItem={this.onAddItem.bind(this)} onChangeItem={this.onChangeItem.bind(this)} />
           <InvoicesViewTotal invoice={invoice} config={config} onConfigUpdate={this.handleConfigUpdate.bind(this)} />
-          <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Create Invoice</button>
+          { invoice.id ?
+            <button type='submit' className='btn btn-default' onClick={this.onUpdateInvoice.bind(this)}>Save</button>
+            :
+            <button type='submit' className='btn btn-default' onClick={this.onCreateInvoice.bind(this)}>Save</button>
+          }
           <button className='btn btn-info' onClick={this.goToPreviewInvoice.bind(this)}>Preview</button>
         </form>
       </div>
@@ -53,6 +63,11 @@ class InvoicesViewSection extends Component {
   onCreateInvoice(e) {
     e.preventDefault();
     this.props.dispatch(ServerActions.createInvoice(this.props.invoice));
+  }
+
+  onUpdateInvoice(e) {
+    e.preventDefault();
+    this.props.dispatch(ServerActions.updateInvoice(this.props.invoice));
   }
 
   goToPreviewInvoice(e) {

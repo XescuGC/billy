@@ -87,6 +87,16 @@ export function createInvoice(invoice) {
   };
 }
 
+export function updateInvoice(invoice) {
+  return dispatch => {
+    dispatch(fetching());
+    request('updateInvoice', invoice).then(json => {
+      dispatch(fetched());
+      dispatch(fetchInvoices());
+    });
+  };
+}
+
 export function deleteInvoice(invoice) {
   return dispatch => {
     dispatch(fetching());

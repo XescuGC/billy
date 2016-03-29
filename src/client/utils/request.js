@@ -5,6 +5,7 @@ const ROUTES = {
   'invoices'          : { method: 'GET',    url: `${ORIGIN}/invoices`     },
   'createClient'      : { method: 'POST',   url: `${ORIGIN}/clients/new`  },
   'createInvoice'     : { method: 'POST',   url: `${ORIGIN}/invoices/new` },
+  'updateInvoice'     : { method: 'POST',   url: `${ORIGIN}/invoices/:id` },
   'updateConfig'      : { method: 'POST',   url: `${ORIGIN}/config`       },
   'deleteInvoice'     : { method: 'DELETE', url: `${ORIGIN}/invoices/:id` },
 }

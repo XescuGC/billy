@@ -34,10 +34,14 @@ CREATE TABLE config(
 -- INSERTING CONFIG
 INSERT INTO config (key, value) values ('vat',       '21'  );
 INSERT INTO config (key, value) values ('currency',  '€'   );
-INSERT INTO config (key, value) values ('user:name', 'Cesc');
+INSERT INTO config (key, value) values ('user:name', 'Billy the invoicer');
+INSERT INTO config (key, value) values ('user:vat_number', 'D-666');
+INSERT INTO config (key, value) values ('user:address', 'On the beach');
+INSERT INTO config (key, value) values ('user:province', 'Barcelona');
+INSERT INTO config (key, value) values ('user:locality', 'Barcelona');
+INSERT INTO config (key, value) values ('user:zipcode', '08025');
+INSERT INTO config (key, value) values ('user:country', 'España');
 
--- INSERTING CLIENT
-INSERT INTO client (name, vat_number, address, province, locality, zipcode, country) values ('Pepito', 'C123456787', 'C/ Pepito', 'Barcelona', 'Barcelona', '08032', 'Spain');
--- INSERTING INVOICE
-INSERT INTO invoice (client_id, emitted) values (1, '1454274155840');
+INSERT INTO config (key, value) values ('invoice_number', '0');
+INSERT INTO config (key, value) values ('invoice_number_template', '{{number}}');
 -- INSERT INTO config (key, value) values ('pit', '18'); --irpf

@@ -7,8 +7,8 @@ class InvoicesViewItems extends Component{
   render() {
     const { invoice } = this.props;
     return (
-      <div>
-        <h3>Invoice Items</h3>
+      <div className='items'>
+        <h3>Items</h3>
         { this.renderItems(invoice.items) }
         { this.renderNewItem() }
       </div>
