@@ -1,5 +1,5 @@
 import express    from 'express';
-import { Invoice } from '../models';
+import { Invoice, Config } from '../models';
 
 const invoices = express();
 
@@ -68,5 +68,15 @@ invoices.delete('/:id', (req, res, next) => {
     res.status(422).json({ error: err.toString() });
   });
 });
+
+// invoices.get('/next-number', (req, res, next) => {
+//   Config.get('invoice_number').then(number_config => {
+//     let nextNumber = number_config.is_stored ? number_config.value + 1 : 1;
+//     return res.status(200).json({ invoice: { number: nextNumber }});
+//   }).catch(err => {
+//     console.trace(err);
+//     res.status(422).json({ error: err.toString() });
+//   })
+// });
 
 export default invoices;

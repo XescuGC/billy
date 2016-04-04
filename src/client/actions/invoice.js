@@ -28,3 +28,8 @@ export function updateInvoiceClient(client) {
 export function removeInvoice(invoice) {
   return { type: ActionTypes.REMOVE_INVOICE, payload: { invoice } };
 }
+
+export function setInvoiceNumber(number) {
+  return { type: ActionTypes.SET_INVOICE_NUMBER, payload: { number } };
+}
+
