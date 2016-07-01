@@ -7,6 +7,7 @@ import FormGroup                from './FormGroup';
 import InvoicesViewInformation  from './InvoicesViewInformation';
 import InvoicesViewItems        from './InvoicesViewItems';
 import InvoicesViewTotal        from './InvoicesViewTotal';
+import Mustache                 from 'mustache';
 
 class InvoicesViewSection extends Component {
   render() {
@@ -17,7 +18,7 @@ class InvoicesViewSection extends Component {
           <div className="form-inline pull-right">
             <div className="form-group">
               <label for="num">Number: </label>
-              <input type="text" className="form-control" id="num" />
+              <input type="text" className="form-control" value={invoice.number} id="num" />
             </div>
           </div>
           <h1>{ invoice.id ? 'Edit' : 'New'} invoice</h1>
@@ -39,8 +40,9 @@ class InvoicesViewSection extends Component {
 
   componentDidMount() {
     const { invoice, config } = this.props;
-    console.log(invoice);
+    //console.log(invoice);
     if (!invoice.vat) this.handleConfigUpdate( config.vat, config.pit );
+    if (!invoice.number) this.getNextNumber();
   }
 
   onAddItem(item) { this.props.dispatch(ServerActions.createItem(item)) }
@@ -58,6 +60,12 @@ class InvoicesViewSection extends Component {
   handleClientChange(client) {
     const { dispatch } = this.props;
     dispatch( InvoiceActions.updateInvoiceClient( client ) );
+  }
+
+  getNextNumber() {
+    const { dispatch, config } = this.props;
+    const nextNumber = Mustache.render(config.invoice_number_template, { number: ((config.invoice_number||0)*1)+1 } );
+    dispatch( InvoiceActions.setInvoiceNumber(nextNumber) );
   }
 
   onCreateInvoice(e) {
