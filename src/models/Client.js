@@ -47,9 +47,9 @@ const deleteStatement = db.prepare('DELETE FROM client WHERE id=$id');
 Client.prototype.delete = function() {
   if ( !this.id ) throw( new Error('Unable to delete before insert!') );
   return new Promise( (resolve, reject) => {
-    db.run( deleteStatement, { $id: this.id }, function(err) {
+    deleteStatement.run({ $id: this.id }, function(err) {
       if (err) return reject(err);
-      resolve();
+      resolve(true);
     });
   });
 }

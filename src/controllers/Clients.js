@@ -25,4 +25,23 @@ clients.post('/new', (req, res, next) => {
   });
 });
 
+clients.use('/:id', (req, res, next) => {
+  if ( res.locals.done ) return next();
+  Client.findOne(req.params.id).then(client => {
+    if ( !client ) throw(`Missing invoice ${req.params.id}`);
+    res.locals.client = client;
+    next();
+  }).catch(err => {
+    console.trace(err);
+    res.status(422).json({ error: err.toString() });
+  })
+});
+
+clients.delete('/:id', (req, res, next) => {
+  res.locals.client.delete().then( ok => res.status(200).json({})).catch( err => {
+    console.trace(err);
+    res.status(422).json({ error: err.toString() });
+  })
+});
+
 export default clients;

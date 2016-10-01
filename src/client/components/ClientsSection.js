@@ -14,9 +14,36 @@ class ClientsSection extends Component {
         header={{
           options: this.renderHeaderOptions.bind(this)
         }}
+        row={{
+          options: this.renderRowOptions.bind(this)
+        }}
       />
     )
   }
+
+  renderRowOptions(client) {
+    return(
+      <td key='options' style={{textAlign: 'right'}}>
+        <button onClick={this.handleClickDelete.bind(this, client)} type="button" className="btn btn-danger">
+          Delete
+        </button>
+        <button onClick={this.handleClickView.bind(this, client)} type="button" className="btn btn-primary">
+          View
+        </button>
+      </td>
+    )
+  }
+
+  handleClickView(client, e) {
+    e.preventDefault()
+    //this.props.dispatch(ServerActions)
+  }
+
+  handleClickDelete(client, e) {
+    e.preventDefault()
+    this.props.dispatch(ServerActions.deleteClient(client))
+  }
+
 
   componentDidMount() {
     const { clients, dispatch } = this.props;
