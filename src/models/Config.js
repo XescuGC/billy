@@ -3,7 +3,7 @@ import db         from '../schema';
 import WithSchema from './roles/WithSchema';
 
 class Config extends Jsmoo {}
-Config.with(WithSchema);
+Config.does(WithSchema);
 
 Config.has({
   key:       { is: 'rw', isa: 'string' },

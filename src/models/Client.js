@@ -3,7 +3,7 @@ import db         from '../schema';
 import WithSchema from './roles/WithSchema';
 
 class Client extends Jsmoo {}
-Client.with(WithSchema);
+Client.does(WithSchema);
 
 Client.has({
   id:         { is: 'rw', isa: 'number' },

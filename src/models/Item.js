@@ -4,7 +4,7 @@ import Invoice    from './Invoice';
 import WithSchema from './roles/WithSchema';
 
 class Item extends Jsmoo {}
-Item.with(WithSchema);
+Item.does(WithSchema);
 
 Item.has({
   id:          { is: 'rw', isa: 'number' },
