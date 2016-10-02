@@ -44,4 +44,12 @@ clients.delete('/:id', (req, res, next) => {
   })
 });
 
+clients.put('/:id', (req, res, next) => {
+  res.locals.client.merge(req.body)
+  res.locals.client.update().then( ok => res.status(200).json(res.locals.client.toJSON())).catch( err => {
+    console.trace(err);
+    res.status(422).json({ error: err.toString() });
+  })
+});
+
 export default clients;

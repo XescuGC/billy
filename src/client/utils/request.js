@@ -4,7 +4,8 @@ const ROUTES = {
   'config'            : { method: 'GET',    url: `${ORIGIN}/config`       },
   'invoices'          : { method: 'GET',    url: `${ORIGIN}/invoices`     },
   'createClient'      : { method: 'POST',   url: `${ORIGIN}/clients/new`  },
-  'deleteClient'      : { method: 'DELETE', url: `${ORIGIN}/clients/:id` },
+  'updateClient'      : { method: 'PUT',    url: `${ORIGIN}/clients/:id`  },
+  'deleteClient'      : { method: 'DELETE', url: `${ORIGIN}/clients/:id`  },
   'createInvoice'     : { method: 'POST',   url: `${ORIGIN}/invoices/new` },
   'updateInvoice'     : { method: 'POST',   url: `${ORIGIN}/invoices/:id` },
   'updateConfig'      : { method: 'POST',   url: `${ORIGIN}/config`       },
@@ -42,10 +43,11 @@ export default function request ( routeName, query ) {
   conf.method = route.method;
 
   [ route, query ] = injectToUrl(route, query);
+  console.log(route, query)
 
   if (conf.method === 'GET' ) {
     conf.url = `${route.url}?${querySerializer(query)}`
-  } else if (conf.method === 'POST' ) {
+  } else if (conf.method === 'POST' || conf.method == 'PUT' ) {
     conf.url = route.url;
     conf.data = query;
   } else {

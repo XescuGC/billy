@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router'
 import Layout                from './containers/Layout';
 import InvoicesSection       from './components/InvoicesSection';
 import ClientsSection        from './components/ClientsSection';
-import ClientsNewSection     from './components/ClientsNewSection';
+import ClientsViewSection    from './components/ClientsViewSection';
 import InvoicesViewSection   from './components/InvoicesViewSection';
 import InvoicePreview        from './components/InvoicePreview';
 import ConfigSection         from './components/ConfigSection';
@@ -16,7 +16,8 @@ function getRoutes() {
       <Route path='invoices/new' component={InvoicesViewSection} />
       <Route path='invoices/:id' component={InvoicesViewSection} />
       <Route path='clients'      component={ClientsSection} />
-      <Route path='clients/new'  component={ClientsNewSection} />
+      <Route path='clients/new'  component={ClientsViewSection} />
+      <Route path='clients/:id'  component={ClientsViewSection} />
       <Route path='config'       component={ConfigSection} />
     </Route>
     ,

@@ -64,6 +64,12 @@ Client.findOne = function(id) {
   });
 }
 
+Client.prototype.merge = function(c) {
+  Object.keys(c).forEach(k => {
+    this[k] = c[k]
+  })
+}
+
 Client._inflate = function(row) {
   return new Client(row);
 }

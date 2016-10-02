@@ -1,6 +1,6 @@
 import { batchActions } from 'redux-batched-actions';
 import { request } from '../utils';
-import { addClient, removeClient, loadClients } from './client';
+import { editClient, addClient, removeClient, loadClients } from './client';
 import { loadInvoices, addItem, removeInvoice } from './invoice';
 import { loadConfig } from './config';
 import * as ActionTypes from '../constants/Server';
@@ -59,6 +59,18 @@ export function createClient(client) {
       dispatch(batchActions([
         fetched(),
         addClient(json),
+      ]));
+    });
+  };
+}
+
+export function updateClient(client) {
+  return dispatch => {
+    dispatch(fetching());
+    request('updateClient', client).then(json => {
+      dispatch(batchActions([
+        fetched(),
+        editClient(json),
       ]));
     });
   };

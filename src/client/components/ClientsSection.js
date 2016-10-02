@@ -3,6 +3,7 @@ import { connect }          from 'react-redux';
 import { pushPath }         from 'redux-simple-router';
 import Table                from './Table';
 import * as ServerActions   from '../actions/server';
+import * as ClientActions   from '../actions/client';
 
 class ClientsSection extends Component {
   render() {
@@ -36,7 +37,7 @@ class ClientsSection extends Component {
 
   handleClickView(client, e) {
     e.preventDefault()
-    //this.props.dispatch(ServerActions)
+    this.props.dispatch(ClientActions.selectClient(client))
   }
 
   handleClickDelete(client, e) {
